@@ -90,6 +90,6 @@ if __name__ == '__main__':
         rootend=re.split('/',root)[-1]
         if re.match('[a-zA-Z0-9]',rootend):
             os.chdir(root)
-            REPODIR=re.split('analysis-elise-2/',root)[-1]
+            REPODIR=re.split('analysis-keegan/',root)[-1]
             main(REPODIR)
     os.chdir(startdir)
