@@ -6,14 +6,18 @@ The links below are to static renderings of the notebooks via
 Descriptions under the links below are from the first cell of the notebooks
 (if that cell contains Markdown or raw text).
 
-* ## [By_Area_Evaluations.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/By_Area_Evaluations.ipynb)  
+* ## [By_Region.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/By_Region.ipynb)  
     
     This script contains a variety of scatter plots in order to show the correlation between model data and observational and how environmental variables can effect the error of the model data. It also contains many tables which list the bias, root mean square error, and Wilmot skill score of model-observational comparisons of various variables. (Note too self, the ability to generate a map for a specific area with colour coded stations that are equivalent to the graphs would be good.) 
 
-* ## [By_Year_Evaluations-Copy1.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/By_Year_Evaluations-Copy1.ipynb)  
+* ## [CTD_By_Year.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/CTD_By_Year.ipynb)  
+    
+* ## [CTD_Nutrients_By_Year.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/CTD_Nutrients_By_Year.ipynb)  
     
     This script contains a variety of scatter plots in order to show the correlation between model data and observational and how environmental variables can effect the error of the model data. It specifically focuses on 
 
+* ## [Nutrients_By_Year.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Nutrients_By_Year.ipynb)  
+    
 * ## [Untitled.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Untitled.ipynb)  
     
 
