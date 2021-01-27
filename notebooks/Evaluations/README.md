@@ -12,11 +12,13 @@ Descriptions under the links below are from the first cell of the notebooks
 
 * ## [CTD_By_Year.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/CTD_By_Year.ipynb)  
     
+    This script looks at the relationship between model and observed values of temperature and Salinity within Puget Sound. It is made so that multiple years can be viewed at once. 
+
 * ## [CTD_Nutrients_By_Year.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/CTD_Nutrients_By_Year.ipynb)  
     
-    This script contains a variety of scatter plots in order to show the correlation between model data and observational and how environmental variables can effect the error of the model data. It specifically focuses on 
+    This script contains two sections. The frist is a series of scatter plots that show how environmental variables can effect the error of the model data. The second is a series of scatter plots that show correlation between model data and observational data. This script is made so that you can easily view multiple years at once.
 
-* ## [Nutrients_By_Year.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Nutrients_By_Year.ipynb)  
+* ## [Time_Series_evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Time_Series_evaluation.ipynb)  
     
 * ## [Untitled.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Untitled.ipynb)  
     
