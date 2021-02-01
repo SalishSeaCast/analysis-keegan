@@ -12,6 +12,8 @@ Descriptions under the links below are from the first cell of the notebooks
     
 * ## [2009_Puget_Evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Individual_year_evaluations/2009_Puget_Evaluation.ipynb)  
     
+    A notebook which contains an evaluation of the SalishSeaCast model within PugetSound for the year 2019. This evaluation includes scatter plots and 2d histograms visualizing the similarity of observed and model data as well as tables evaluation statistics. 
+
 * ## [2010_Puget_Evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Individual_year_evaluations/2010_Puget_Evaluation.ipynb)  
     
 * ## [2011_Puget_Evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Individual_year_evaluations/2011_Puget_Evaluation.ipynb)  
