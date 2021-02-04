@@ -6,6 +6,14 @@ The links below are to static renderings of the notebooks via
 Descriptions under the links below are from the first cell of the notebooks
 (if that cell contains Markdown or raw text).
 
+* ## [All_Years_Evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/All_Years_Evaluation.ipynb)  
+    
+    This script will contain evaluations for all years combined.
+
+* ## [All_year_summary.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/All_year_summary.ipynb)  
+    
+    A notebook which will contain plots showing data summaries for every year combined.
+
 * ## [By_Region.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/By_Region.ipynb)  
     
     This script contains a variety of scatter plots in order to show the correlation between model data and observational and how environmental variables can effect the error of the model data. It also contains many tables which list the bias, root mean square error, and Wilmot skill score of model-observational comparisons of various variables. It is made so that multiple years can be switched between easily.
@@ -21,6 +29,10 @@ Descriptions under the links below are from the first cell of the notebooks
 * ## [Keegan_eval_tools.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Keegan_eval_tools.ipynb)  
     
     This is just a little notebook that I am adding all of the functions I create. Hopefully, they will eventually be good enough to add to the real evaltools, but if they never get there than at least they will be useful to me. Obviously the single cell created here will have to be copied into a normal python script for this to work as an importable script. I am just using Jupyter as a convenient text editor.
+
+* ## [Pickle_Loader.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Pickle_Loader.ipynb)  
+    
+    This Script only exists as a place to load up all of the pickle files files while I am busy doing other things.
 
 * ## [Time_Series_evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Time_Series_evaluation.ipynb)  
     

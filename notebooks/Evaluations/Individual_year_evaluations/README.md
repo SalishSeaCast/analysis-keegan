@@ -6,26 +6,10 @@ The links below are to static renderings of the notebooks via
 Descriptions under the links below are from the first cell of the notebooks
 (if that cell contains Markdown or raw text).
 
-* ## [2007_Puget_Evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Individual_year_evaluations/2007_Puget_Evaluation.ipynb)  
-    
-* ## [2008_Puget_Evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Individual_year_evaluations/2008_Puget_Evaluation.ipynb)  
-    
 * ## [2009_Puget_Evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Individual_year_evaluations/2009_Puget_Evaluation.ipynb)  
     
-    A notebook which contains an evaluation of the SalishSeaCast model within PugetSound for the year 2019. This evaluation includes scatter plots and 2d histograms visualizing the similarity of observed and model data as well as tables evaluation statistics. 
+    A notebook which contains an evaluation of the SalishSeaCast model within PugetSound for the year 2019. This evaluation includes scatter plots and 2d histograms visualizing the similarity of observed and model data as well as tables evaluation statistics. The observed data compared to the model data in this evaluation was collected using bottle samples.
 
-* ## [2010_Puget_Evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Individual_year_evaluations/2010_Puget_Evaluation.ipynb)  
-    
-* ## [2011_Puget_Evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Individual_year_evaluations/2011_Puget_Evaluation.ipynb)  
-    
-* ## [2012_Puget_Evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Individual_year_evaluations/2012_Puget_Evaluation.ipynb)  
-    
-* ## [2013_Puget_Evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Individual_year_evaluations/2013_Puget_Evaluation.ipynb)  
-    
-* ## [2014_Puget_Evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Individual_year_evaluations/2014_Puget_Evaluation.ipynb)  
-    
-* ## [2015_Puget_Evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Individual_year_evaluations/2015_Puget_Evaluation.ipynb)  
-    
 
 ##License
 
