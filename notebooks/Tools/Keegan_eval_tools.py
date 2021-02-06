@@ -213,7 +213,7 @@ def bySeason(ax,seasons,obsvar,modvar,lims):
     ax[3].set_title('Sep-Dec')
     return 
 
-def hist2d(ax,df,obsvar,modvar,lims,fontsize=12):
+def hist2d(ax,fig,df,obsvar,modvar,lims,fontsize=12):
     ax.plot((-250,250),(-250,250),'k-',alpha=.2)
     ii=(~np.isnan(df[obsvar]))&(~np.isnan(df[modvar]))
     counts, xedges, yedges, ps=ax.hist2d(df.loc[ii,[obsvar]].values.flatten(),
@@ -226,7 +226,7 @@ def hist2d(ax,df,obsvar,modvar,lims,fontsize=12):
     plt.tight_layout()
     return ps  
 
-def bySeason_hist2d(ax,seasons,obsvar,modvar,lims):
+def bySeason_hist2d(ax,fig,seasons,obsvar,modvar,lims):
     for axj in ax:
         for axi in axj:
             axi.plot(lims,lims,'k-')
@@ -235,13 +235,13 @@ def bySeason_hist2d(ax,seasons,obsvar,modvar,lims):
             axi.set_aspect(1)
             axi.set_xlabel('Obs')
             axi.set_ylabel('Model')
-    jp=hist2d(seaons[0],ax[0][0],obsvar,modvar,lims)
+    jp=hist2d(ax[0][0],fig,seasons[0],obsvar,modvar,lims)
     ax[0][0].set_title('Jan-Mar')
-    jp=hist2d(seaons[1],ax[0][1],obsvar,modvar,lims)
+    jp=hist2d(ax[0][1],fig,seasons[1],obsvar,modvar,lims)
     ax[0][1].set_title('Apr')
-    jp=hist2d(seaons[2],ax[1][0],obsvar,modvar,lims)
+    jp=hist2d(ax[1][0],fig,seasons[2],obsvar,modvar,lims)
     ax[1][0].set_title('May-Aug')
-    jp=hist2d(seasons[3],ax[1][1],obsvar,modvar,lims)
+    jp=hist2d(ax[1][1],fig,seasons[3],obsvar,modvar,lims)
     ax[1][1].set_title('Sep-Dec')
     return 
 
