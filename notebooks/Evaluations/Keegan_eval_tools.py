@@ -20,6 +20,12 @@ import f90nml
 from collections import OrderedDict
 from matplotlib.colors import LogNorm
 
+def _deframe(x):
+    # if array is pandas series or dataframe, return the values only
+    if isinstance(x,pd.Series) or isinstance(x,pd.DataFrame):
+        x=x.values.flatten()
+    return x
+
 def load_Pheo_data(year,datadir='/ocean/eolson/MEOPAR/obs/WADE/ptools_data/ecology'):
     ## duplicate Station/Date entries with different times seem to be always within a couple of hours, 
     # so just take the first (next cell)
@@ -284,15 +290,6 @@ def multi_enverr_graph(df,datyear,years,obsvar,modvar,envvar,envvar_name,figsize
         raise(TypeError('years must be of type list or int'))
     plt.tight_layout()
         
-def multi_timerror_graph(df,datyear,years,obsvar,modvar,down,figsize):
-    fig,ax=plt.subplots(down,1,figsize=figsize)
-    for d,Y in zip(range(down),years):
-            m=ax[d].scatter(datyear[Y]['dtUTC'],datyear[Y][modvar]-datyear[Y][obsvar],s=8,cmap='gnuplot') 
-            ax[d].set_xlabel(f'Date',fontsize=20)
-            ax[d].set_ylabel(f'{obsvar} Error ($\mu$M)',fontsize=20)
-            ax[d].set_title(str(Y), fontsize=22)
-    plt.tight_layout()
-        
 def multi_station_graph(df,datstat,obsvar,modvar,regions,year,lims,down=6,figsize=(14,40)):
     """ A function that creates a series of scatter plots and maps for each region
         And shows the stations within each region colored on the graph and map. 
@@ -337,8 +334,20 @@ def multi_station_graph(df,datstat,obsvar,modvar,regions,year,lims,down=6,figsiz
 
 def logt(x):
     return np.log10(x+.001)
-
-def multi_timerror_graph(df,years,obsvar,modvar,figsize,):
+    
+def multi_meanerr_graph(df,datyear,years,obsvar,modvar,down,figsize):
+    fig,ax=plt.subplots(down,1,figsize=figsize)
+    for d,Y in zip(range(down),years):
+            meanerr=datyear[Y].groupby(by='dtUTC').mean()
+            m=ax[d].plot(datyear[Y]['dtUTC'].unique(),meanerr[modvar]-meanerr[obsvar],'c-') 
+            ax[d].set_xlabel(f'Date',fontsize=20)
+            ax[d].set_ylabel(f'{obsvar} Error ($\mu$M)',fontsize=20)
+            ax[d].set_title(str(Y), fontsize=22)
+            yearsFmt = mdates.DateFormatter('%d %b')
+            ax[d].xaxis.set_major_formatter(yearsFmt)
+    plt.tight_layout()
+    
+def multi_timerror_graph(df,datyear,years,obsvar,modvar,figsize):
     if type(years) == int:
         fig,ax=plt.subplots(1,1,figsize=figsize)
         m=ax.scatter(datyear[years]['dtUTC'],datyear[years][modvar]-datyear[years][obsvar],s=8,cmap='gnuplot') 
@@ -348,20 +357,9 @@ def multi_timerror_graph(df,years,obsvar,modvar,figsize,):
         yearsFmt = mdates.DateFormatter('%d %b')
         ax.xaxis.set_major_formatter(yearsFmt)
     elif type(years) == list:
-        for d,Y in zip(range(down),years):
-                m=ax[d].scatter(datyear[Y]['dtUTC'],datyear[Y][modvar]-datyear[Y][obsvar],s=8,cmap='gnuplot') 
-                ax[d].set_xlabel(f'Date',fontsize=20)
-                ax[d].set_ylabel(f'{obsvar} Error ($\mu$M)',fontsize=20)
-                ax[d].set_title(str(Y), fontsize=22)
-                yearsFmt = mdates.DateFormatter('%d %b')
-                ax[d].xaxis.set_major_formatter(yearsFmt)
-    plt.tight_layout()
-    
-def multi_meanerr_graph(df,datyear,years,obsvar,modvar,down,figsize):
-    fig,ax=plt.subplots(down,1,figsize=figsize)
-    for d,Y in zip(range(down),years):
-            meanerr=datyear[Y].groupby(by='dtUTC').mean()
-            m=ax[d].plot(datyear[Y]['dtUTC'].unique(),meanerr[modvar]-meanerr[obsvar],'c-') 
+        fig,ax=plt.subplots(len(years),1,figsize=figsize)
+        for d,Y in zip(range(len(years)),years):
+            m=ax[d].scatter(datyear[Y]['dtUTC'],datyear[Y][modvar]-datyear[Y][obsvar],s=8,cmap='gnuplot') 
             ax[d].set_xlabel(f'Date',fontsize=20)
             ax[d].set_ylabel(f'{obsvar} Error ($\mu$M)',fontsize=20)
             ax[d].set_title(str(Y), fontsize=22)
@@ -393,6 +391,21 @@ def multi_timese_graph(df,years,obsvar,modvar,figsize):
         raise(TypeError('years must be of type list or int'))
     plt.tight_layout()
     
+# Why and how is the legend part of this broken???
+def all_years(data,obsvar,modvar):
+    start_date=dt.datetime(2007,1,1)
+    end_date=dt.datetime(2019,12,31)
+    fig,ax=plt.subplots(1,1,figsize=(19,8))
+    ps=tsertser_graph(ax,data,obsvar,modvar,start_date,end_date)
+    ax.legend(handles=ps)
+    ax.set_ylabel(f'{obsvar} ($\mu$M)')
+    ax.set_xlabel('Date')
+    ax.set_title(f'Timeseries of modeled and observed {obsvar} for years 2007-2019')
+    plt.setp(ax.get_xticklabels(), rotation=30, horizontalalignment='right')
+    M = 15
+    xticks = mpl.ticker.MaxNLocator(M)
+    ax.xaxis.set_major_locator(xticks)
+    
 #ready for evaltools
 def tsertser_graph(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]),lname='',sepunits='',
                   ocols=('blue','darkviolet','teal','green','deepskyblue'),
@@ -405,16 +418,18 @@ def tsertser_graph(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]
         lname=sepvar
     ps=list()
     if len(sepvals)==0:
-        obs0=_deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[obsvar]])
-        mod0=_deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[modvar]])
-        time0=_deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),['dtUTC']])
-        ps.append(ax.plot(time0,obs0,'.',color=ocols[0],label=f'Observed {lname}'))
-        ps.append(ax.plot(time0,mod0,'.',color=mcols[0],label=f'Modeled {lname}'))
+        obs0=et._deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[obsvar]])
+        mod0=et._deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[modvar]])
+        time0=et._deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),['dtUTC']])
+        p0,=ax.plot(time0,obs0,'.',color=ocols[0],label=f'Observed {lname}')
+        ps.append(p0)
+        p0,=ax.plot(time0,mod0,'.',color=mcols[0],label=f'Modeled {lname}')
+        ps.append(p0)
     else:
-        obs0=_deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[obsvar]])
-        mod0=_deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[modvar]])
-        time0=_deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),['dtUTC']])
-        sep0=_deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[sepvar]])
+        obs0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[obsvar]])
+        mod0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[modvar]])
+        time0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),['dtUTC']])
+        sep0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[sepvar]])
         sepvals=np.sort(sepvals)
                 # less than min case:
         ii=0
@@ -457,3 +472,6 @@ def tsertser_graph(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]
     yearsFmt = mdates.DateFormatter('%d %b %y')
     ax.xaxis.set_major_formatter(yearsFmt)
     return ps
+
+#I think jupyter is weird about saving so I am adding extra stuff
+#hey look, stuff.
