@@ -333,7 +333,7 @@ def multi_station_graph(df,datstat,obsvar,modvar,regions,lims,figsize=(14,40)):
         ax[d][1].set_ylim(47, 49)
         ax[d][1].legend(bbox_to_anchor=[1,.6,0,0])
         ax[d][1].set_xlim(-124, -122);
-        ax[d][1].set_title(f'Observation Locations for {r}');  
+        ax[d][1].set_title(f'Observation Locations for {r}'); 
 
 def logt(x):
     return np.log10(x+.001)
