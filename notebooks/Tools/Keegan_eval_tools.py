@@ -20,6 +20,9 @@ import f90nml
 from collections import OrderedDict
 from matplotlib.colors import LogNorm
 
+colors=('blue','green','firebrick','darkorange','darkviolet','fuchsia',
+        'royalblue','darkgoldenrod','mediumspringgreen','deepskyblue')
+
 def _deframe(x):
     # if array is pandas series or dataframe, return the values only
     if isinstance(x,pd.Series) or isinstance(x,pd.DataFrame):
@@ -200,11 +203,11 @@ def bySeason(ax,seasons,obsvar,modvar,lims):
         axi.set_aspect(1)
         axi.set_xlabel('Obs')
         axi.set_ylabel('Model')
-    ps=et.varvarPlot(ax[0],seaons[0],obsvar,modvar,cols=('crimson','darkturquoise','navy'))
+    ps=et.varvarPlot(ax[0],seasons[0],obsvar,modvar,cols=('crimson','darkturquoise','navy'))
     ax[0].set_title('Jan-Mar')
-    ps=et.varvarPlot(ax[1],seaons[1],obsvar,modvar,cols=('crimson','darkturquoise','navy'))
+    ps=et.varvarPlot(ax[1],seasons[1],obsvar,modvar,cols=('crimson','darkturquoise','navy'))
     ax[1].set_title('Apr')
-    ps=et.varvarPlot(ax[2],seaons[2],obsvar,modvar,cols=('crimson','darkturquoise','navy'))
+    ps=et.varvarPlot(ax[2],seasons[2],obsvar,modvar,cols=('crimson','darkturquoise','navy'))
     ax[2].set_title('May-Aug')
     ps=et.varvarPlot(ax[3],seasons[3],obsvar,modvar,cols=('crimson','darkturquoise','navy'))
     ax[3].set_title('Sep-Dec')
@@ -290,7 +293,7 @@ def multi_enverr_graph(df,datyear,years,obsvar,modvar,envvar,envvar_name,figsize
         raise(TypeError('years must be of type list or int'))
     plt.tight_layout()
         
-def multi_station_graph(df,datstat,obsvar,modvar,regions,year,lims,down=6,figsize=(14,40)):
+def multi_station_graph(df,datstat,obsvar,modvar,regions,lims,figsize=(14,40)):
     """ A function that creates a series of scatter plots and maps for each region
         And shows the stations within each region colored on the graph and map. 
     
@@ -316,9 +319,9 @@ def multi_station_graph(df,datstat,obsvar,modvar,regions,year,lims,down=6,figsiz
     :arg figsize: a pair of values that decide the size of the entire figure
     :type : tuple
     """
-    fig, ax = plt.subplots(down,2,figsize = figsize)
-    for d,r in zip(range(down),regions):
-        ps=byStation(ax[d][0],obsvar,modvar,lims,r,year)
+    fig, ax = plt.subplots(len(regions),2,figsize = figsize)
+    for d,r in zip(range(len(regions)),regions):
+        ps=byStation(ax[d][0],df,datstat,r,obsvar,modvar,lims)
         ax[d][0].set_title(f'{obsvar} ($\mu$M) in {r} by Station');
 
         with nc.Dataset('/data/vdo/MEOPAR/NEMO-forcing/grid/bathymetry_201702.nc') as grid:
