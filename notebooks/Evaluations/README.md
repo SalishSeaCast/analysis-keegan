@@ -26,6 +26,10 @@ Descriptions under the links below are from the first cell of the notebooks
     
     This script contains two sections. The frist is a series of scatter plots that show how environmental variables can effect the error of the model data. The second is a series of scatter plots that show correlation between model data and observational data. This script is made so that you can easily view multiple years at once.
 
+* ## [Chlbot_Pickle_Loader.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Chlbot_Pickle_Loader.ipynb)  
+    
+    This Script only exists as a place to load up all of the pickle files files while I am busy doing other things.
+
 * ## [Keegan_eval_tools.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Keegan_eval_tools.ipynb)  
     
     This is just a little notebook that I am adding all of the functions I create. Hopefully, they will eventually be good enough to add to the real evaltools, but if they never get there than at least they will be useful to me. Obviously the single cell created here will have to be copied into a normal python script for this to work as an importable script. I am just using Jupyter as a convenient text editor.

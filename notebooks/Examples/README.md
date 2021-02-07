@@ -12,6 +12,8 @@ Descriptions under the links below are from the first cell of the notebooks
     
 * ## [Updated_Puget_WADE_Example_2009.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Examples/Updated_Puget_WADE_Example_2009.ipynb)  
     
+* ## [WADE_AlignedNutsAndChl_2018-2019_withFullChlPheoAndTimeExample.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Examples/WADE_AlignedNutsAndChl_2018-2019_withFullChlPheoAndTimeExample.ipynb)  
+    
 * ## [plotModelOutputExamples.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Examples/plotModelOutputExamples.ipynb)  
     
 * ## [plottingExample.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Examples/plottingExample.ipynb)  
