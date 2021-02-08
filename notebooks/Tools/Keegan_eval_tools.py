@@ -395,7 +395,7 @@ def multi_timese_graph(df,years,obsvar,modvar,figsize):
     plt.tight_layout()
     
 # Why and how is the legend part of this broken???
-def all_years(data,obsvar,modvar):
+def all_years(data,obsvar,modvar,title):
     start_date=dt.datetime(2007,1,1)
     end_date=dt.datetime(2019,12,31)
     fig,ax=plt.subplots(1,1,figsize=(19,8))
@@ -403,7 +403,7 @@ def all_years(data,obsvar,modvar):
     ax.legend(handles=ps)
     ax.set_ylabel(f'{obsvar} ($\mu$M)')
     ax.set_xlabel('Date')
-    ax.set_title(f'Timeseries of modeled and observed {obsvar} for years 2007-2019')
+    ax.set_title(title)
     plt.setp(ax.get_xticklabels(), rotation=30, horizontalalignment='right')
     M = 15
     xticks = mpl.ticker.MaxNLocator(M)
