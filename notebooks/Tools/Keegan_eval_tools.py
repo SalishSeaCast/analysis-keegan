@@ -30,6 +30,10 @@ def _deframe(x):
     return x
 
 def load_Pheo_data(year,datadir='/ocean/eolson/MEOPAR/obs/WADE/ptools_data/ecology'):
+    """ This function automatically loads the chlorophyll bottle data from WADE for a 
+        given year specified by the user. The output is a pandas dataframe with all of 
+        the necessary columns and groups needed for matching to the model data. 
+    """
     ## duplicate Station/Date entries with different times seem to be always within a couple of hours, 
     # so just take the first (next cell)
     dfTime=pd.read_excel('/ocean/eolson/MEOPAR/obs/WADE/WDE_Data/OlsonSuchyAllen_UBC_PDR_P003790-010721.xlsx',
@@ -93,7 +97,9 @@ def interpCTDvar(sta,yr,yd,ztarget,ctdvar):
         return val
 
 def load_WADE_data(year,datadir='/ocean/eolson/MEOPAR/obs/WADE/ptools_data/ecology'):
-    """ Returns a dataframe containing nutrient bottle data for a given year merged with station data
+    """ This function automatically loads the nutrient bottle data from WADE for a given year
+        specified by the user. The output is a pandas dataframe with all of te necessary 
+        columns and groups needed for matching to the model data. 
     """
     dfSta=pickle.load(open(os.path.join(datadir,'sta_df.p'),'rb'))
     dfBot=pickle.load(open(os.path.join(datadir,f'Bottles_{str(year)}.p'),'rb'))
@@ -214,7 +220,7 @@ def bySeason(ax,seasons,obsvar,modvar,lims):
     return 
 
 def hist2d(ax,fig,df,obsvar,modvar,lims,fontsize=12):
-    ax.plot((-250,250),(-250,250),'k-',alpha=.2)
+    ax.plot(lims,lims,'k-',alpha=.2)
     ii=(~np.isnan(df[obsvar]))&(~np.isnan(df[modvar]))
     counts, xedges, yedges, ps=ax.hist2d(df.loc[ii,[obsvar]].values.flatten(),
                                       df.loc[ii,[modvar]].values.flatten(),bins=25*3,norm=LogNorm())
