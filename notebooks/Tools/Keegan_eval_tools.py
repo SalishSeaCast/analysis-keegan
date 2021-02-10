@@ -201,7 +201,7 @@ def byStation(ax,df,datstat,region,obsvar,modvar,lims):
     ax.set_aspect(1)
     return ps,l
 
-def bySeason(ax,seasons,obsvar,modvar,lims):
+def bySeason(ax,seasons,obsvar,modvar,lims,season_titles=['Jan-Mar','Apr','May-Aug','Sep-Dec']):
     for axi in ax:
         axi.plot(lims,lims,'k-')
         axi.set_xlim(lims)
@@ -210,13 +210,13 @@ def bySeason(ax,seasons,obsvar,modvar,lims):
         axi.set_xlabel('Obs')
         axi.set_ylabel('Model')
     ps=et.varvarPlot(ax[0],seasons[0],obsvar,modvar,cols=('crimson','darkturquoise','navy'))
-    ax[0].set_title('Jan-Mar')
+    ax[0].set_title(season_titles[0])
     ps=et.varvarPlot(ax[1],seasons[1],obsvar,modvar,cols=('crimson','darkturquoise','navy'))
-    ax[1].set_title('Apr')
+    ax[1].set_title(season_titles[1])
     ps=et.varvarPlot(ax[2],seasons[2],obsvar,modvar,cols=('crimson','darkturquoise','navy'))
-    ax[2].set_title('May-Aug')
+    ax[2].set_title(season_titles[2])
     ps=et.varvarPlot(ax[3],seasons[3],obsvar,modvar,cols=('crimson','darkturquoise','navy'))
-    ax[3].set_title('Sep-Dec')
+    ax[3].set_title(season_titles[3])
     return 
 
 def hist2d(ax,fig,df,obsvar,modvar,lims,fontsize=12):
