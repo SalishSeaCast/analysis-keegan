@@ -232,7 +232,7 @@ def hist2d(ax,fig,df,obsvar,modvar,lims,fontsize=12):
     plt.tight_layout()
     return ps  
 
-def bySeason_hist2d(ax,fig,seasons,obsvar,modvar,lims):
+def bySeason_hist2d(ax,fig,seasons,obsvar,modvar,lims,season_titles=['Jan-Mar','Apr','May-Aug','Sep-Dec']):
     for axj in ax:
         for axi in axj:
             axi.plot(lims,lims,'k-')
@@ -242,13 +242,13 @@ def bySeason_hist2d(ax,fig,seasons,obsvar,modvar,lims):
             axi.set_xlabel('Obs')
             axi.set_ylabel('Model')
     jp=hist2d(ax[0][0],fig,seasons[0],obsvar,modvar,lims)
-    ax[0][0].set_title('Jan-Mar')
+    ax[0][0].set_title(season_titles[0])
     jp=hist2d(ax[0][1],fig,seasons[1],obsvar,modvar,lims)
-    ax[0][1].set_title('Apr')
+    ax[0][1].set_title(season_titles[1])
     jp=hist2d(ax[1][0],fig,seasons[2],obsvar,modvar,lims)
-    ax[1][0].set_title('May-Aug')
+    ax[1][0].set_title(season_titles[2])
     jp=hist2d(ax[1][1],fig,seasons[3],obsvar,modvar,lims)
-    ax[1][1].set_title('Sep-Dec')
+    ax[1][1].set_title(season_titles[3])
     return 
 
 def ErrErr(df,fig,ax,obsvar1,modvar1,obsvar2,modvar2,lims1,lims2):
