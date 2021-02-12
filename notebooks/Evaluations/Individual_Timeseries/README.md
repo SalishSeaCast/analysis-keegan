@@ -12,7 +12,7 @@ Descriptions under the links below are from the first cell of the notebooks
 
 * ## [2010_Time_Series_Evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Individual_Timeseries/2010_Time_Series_Evaluation.ipynb)  
     
-    This script contains a bunch of time series diagrams that show how modeled and observed variables vary over time.
+    A notebook which contains timeseries of SalishSeaCast model output and observed data within PugetSound for the year 2009. This script is designed so that changes the the observed and model data over time can be easily compared.
 
 
 ##License

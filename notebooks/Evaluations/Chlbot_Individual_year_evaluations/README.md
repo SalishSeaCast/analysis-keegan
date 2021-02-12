@@ -8,7 +8,7 @@ Descriptions under the links below are from the first cell of the notebooks
 
 * ## [2009_Puget_Chlbot_Evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Chlbot_Individual_year_evaluations/2009_Puget_Chlbot_Evaluation.ipynb)  
     
-    A notebook which contains an evaluation of the SalishSeaCast model within PugetSound for the year 2019. More specifically, it compares Observed data on chlorophyll concentrations collected from bottle data and compares it to various model phytoplankon outputs. This evaluation includes scatter plots and 2d histograms visualizing the similarity of observed and model data as well as tables of evaluation statistics.
+    A notebook which contains an evaluation of the SalishSeaCast model within PugetSound for the year 2009. More specifically, it compares Observed data on chlorophyll concentrations collected from bottle data and compares it to various model phytoplankon outputs. This evaluation includes scatter plots visualizing the similarity of observed and model data as well as tables of evaluation statistics.
 
 
 ##License

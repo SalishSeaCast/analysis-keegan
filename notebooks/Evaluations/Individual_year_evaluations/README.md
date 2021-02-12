@@ -6,9 +6,13 @@ The links below are to static renderings of the notebooks via
 Descriptions under the links below are from the first cell of the notebooks
 (if that cell contains Markdown or raw text).
 
-* ## [2009_Puget_Evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Individual_year_evaluations/2009_Puget_Evaluation.ipynb)  
+* ## [2009_Puget_Evaluation-Copy1.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Individual_year_evaluations/2009_Puget_Evaluation-Copy1.ipynb)  
     
     A notebook which contains an evaluation of the SalishSeaCast model within PugetSound for the year 2019. More specifically, it compares observed data on various nutrient concentrations collected from bottle data and compares it to model outputs. It also looks at temperature and salinity data collected from CTD data and compares model error to these environmental error. This evaluation includes scatter plots and 2d histograms visualizing the similarity of observed and model data as well as tables of evaluation statistics.
+
+* ## [2010_Puget_Evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Individual_year_evaluations/2010_Puget_Evaluation.ipynb)  
+    
+    A notebook which contains an evaluation of the SalishSeaCast model within PugetSound for the year 2010. More specifically, it compares observed data on various nutrient concentrations collected from bottle data and compares it to model outputs. It also looks at temperature and salinity data collected from CTD data and compares model error to these environmental variables. This evaluation includes scatter plots and 2d histograms visualizing the similarity of observed and model data as well as tables of evaluation statistics.
 
 
 ##License
