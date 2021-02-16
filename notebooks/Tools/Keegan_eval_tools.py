@@ -299,7 +299,7 @@ def multi_enverr_graph(df,datyear,years,obsvar,modvar,envvar,envvar_name,figsize
         raise(TypeError('years must be of type list or int'))
     plt.tight_layout()
         
-def multi_station_graph(df,datstat,obsvar,modvar,regions,lims,figsize=(14,40)):
+def multi_station_graph(df,datstat,obsvar,modvar,regions,lims,figsize=(14,40),units='($\mu$M)'):
     """ A function that creates a series of scatter plots and maps for each region
         And shows the stations within each region colored on the graph and map. 
     
@@ -328,7 +328,7 @@ def multi_station_graph(df,datstat,obsvar,modvar,regions,lims,figsize=(14,40)):
     fig, ax = plt.subplots(len(regions),2,figsize = figsize)
     for d,r in zip(range(len(regions)),regions):
         ps=byStation(ax[d][0],df,datstat,r,obsvar,modvar,lims)
-        ax[d][0].set_title(f'{obsvar} ($\mu$M) in {r} by Station');
+        ax[d][0].set_title(f'{obsvar} {units} in {r} by Station');
 
         with nc.Dataset('/data/vdo/MEOPAR/NEMO-forcing/grid/bathymetry_201702.nc') as grid:
             viz_tools.plot_coastline(ax[d][1], grid, coords = 'map',isobath=.1)
