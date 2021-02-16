@@ -291,14 +291,14 @@ def multi_depreg_graph(df,datyear,years,obsvar,modvar,phyvar_name,lims,figsize):
     plt.tight_layout()
         
 # This has been altered but it has not been finished or tested !!!!!!!!!!!!!!!
-def multi_enverr_graph(df,datyear,years,obsvar,modvar,envvar,envvar_name,figsize):
+def multi_enverr_graph(df,datyear,years,obsvar,modvar,envvar,envvar_name,figsize,units='($\mu$M)'):
     if type(years) == int:
         fig,ax=plt.subplots(1,len(obsvar),figsize=figsize)
         for a,(o,m) in enumerate(zip(obsvar,modvar)):
             ps=ax[a].scatter(datyear[years][envvar],datyear[years][m]-datyear[years][o],c=datyear[years]['Z'],s=1,cmap='gnuplot') 
             cb=fig.colorbar(ps,ax=ax[a],label='Depth (m)')
             ax[a].set_xlabel(f'Obs {envvar_name}',fontsize=12)
-            ax[a].set_ylabel(f'{o} Error ($\mu$M)',fontsize=12)
+            ax[a].set_ylabel(f'{o} Error {units}',fontsize=12)
             ax[a].set_title(str(years))
     elif type(years) == list:
         fig,ax=plt.subplots(len(years),len(obsvar),figsize=figsize)
@@ -307,7 +307,7 @@ def multi_enverr_graph(df,datyear,years,obsvar,modvar,envvar,envvar_name,figsize
                 ps=ax[d][a].scatter(datyear[Y][envvar],datyear[Y][m]-datyear[Y][o],c=datyear[Y]['Z'],s=1,cmap='gnuplot') 
                 cb=fig.colorbar(ps,ax=ax[d][a],label='Depth (m)')
                 ax[d][a].set_xlabel(f'Obs {envvar_name}',fontsize=12)
-                ax[d][a].set_ylabel(f'{o} Error ($\mu$M)',fontsize=12)
+                ax[d][a].set_ylabel(f'{o} Error {units}',fontsize=12)
                 ax[d][a].set_title(str(Y))
     else:
         raise(TypeError('years must be of type list or int'))
@@ -358,24 +358,24 @@ def multi_station_graph(df,datstat,obsvar,modvar,regions,lims,figsize=(14,40),un
 def logt(x):
     return np.log10(x+.001)
     
-def multi_meanerr_graph(df,datyear,years,obsvar,modvar,down,figsize):
+def multi_meanerr_graph(df,datyear,years,obsvar,modvar,down,figsize,units='($\mu$M)'):
     fig,ax=plt.subplots(down,1,figsize=figsize)
     for d,Y in zip(range(down),years):
             meanerr=datyear[Y].groupby(by='dtUTC').mean()
             m=ax[d].plot(datyear[Y]['dtUTC'].unique(),meanerr[modvar]-meanerr[obsvar],'c-') 
             ax[d].set_xlabel(f'Date',fontsize=20)
-            ax[d].set_ylabel(f'{obsvar} Error ($\mu$M)',fontsize=20)
+            ax[d].set_ylabel(f'{obsvar} Error {units}',fontsize=20)
             ax[d].set_title(str(Y), fontsize=22)
             yearsFmt = mdates.DateFormatter('%d %b')
             ax[d].xaxis.set_major_formatter(yearsFmt)
     plt.tight_layout()
     
-def multi_timerror_graph(df,datyear,years,obsvar,modvar,figsize):
+def multi_timerror_graph(df,datyear,years,obsvar,modvar,figsize,units='($\mu$M)'):
     if type(years) == int:
         fig,ax=plt.subplots(1,1,figsize=figsize)
         m=ax.scatter(datyear[years]['dtUTC'],datyear[years][modvar]-datyear[years][obsvar],s=8,cmap='gnuplot') 
         ax.set_xlabel(f'Date',fontsize=20)
-        ax.set_ylabel(f'{obsvar} Error ($\mu$M)',fontsize=20)
+        ax.set_ylabel(f'{obsvar} Error {units}',fontsize=20)
         ax.set_title(str(years), fontsize=22)
         yearsFmt = mdates.DateFormatter('%d %b')
         ax.xaxis.set_major_formatter(yearsFmt)
@@ -384,19 +384,19 @@ def multi_timerror_graph(df,datyear,years,obsvar,modvar,figsize):
         for d,Y in zip(range(len(years)),years):
             m=ax[d].scatter(datyear[Y]['dtUTC'],datyear[Y][modvar]-datyear[Y][obsvar],s=8,cmap='gnuplot') 
             ax[d].set_xlabel(f'Date',fontsize=20)
-            ax[d].set_ylabel(f'{obsvar} Error ($\mu$M)',fontsize=20)
+            ax[d].set_ylabel(f'{obsvar} Error {units}',fontsize=20)
             ax[d].set_title(str(Y), fontsize=22)
             yearsFmt = mdates.DateFormatter('%d %b')
             ax[d].xaxis.set_major_formatter(yearsFmt)
     plt.tight_layout()
     
-def multi_timese_graph(df,years,obsvar,modvar,figsize):
+def multi_timese_graph(df,years,obsvar,modvar,figsize,units='($\mu$M)'):
     if type(years) == int:
         fig,ax=plt.subplots(1,1,figsize=figsize)
         ps=tsertser_graph(ax,df,obsvar,modvar,dt.datetime(years,1,1),dt.datetime(years,12,31),'Z',(15,22),'z','m')
         ax.legend(handles=ps,bbox_to_anchor=[1,.6,0,0])
         ax.set_xlabel(f'Date',fontsize=20)
-        ax.set_ylabel(f'{obsvar} ($\mu$M)',fontsize=20)
+        ax.set_ylabel(f'{obsvar} {units}',fontsize=20)
         ax.set_title(str(years), fontsize=22)
         yearsFmt = mdates.DateFormatter('%d %b')
         ax.xaxis.set_major_formatter(yearsFmt)
@@ -406,7 +406,7 @@ def multi_timese_graph(df,years,obsvar,modvar,figsize):
             ps=tsertser_graph(ax[d],df,obsvar,modvar,dt.datetime(Y,1,1),dt.datetime(Y,12,31),'Z',(15,22),'z','m')
             ax[d].legend(handles=ps,bbox_to_anchor=[1,.6,0,0])
             ax[d].set_xlabel(f'Date',fontsize=20)
-            ax[d].set_ylabel(f'{obsvar} ($\mu$M)',fontsize=20)
+            ax[d].set_ylabel(f'{obsvar} {units}',fontsize=20)
             ax[d].set_title(str(Y), fontsize=22)
             yearsFmt = mdates.DateFormatter('%d %b')
             ax[d].xaxis.set_major_formatter(yearsFmt)
@@ -415,13 +415,13 @@ def multi_timese_graph(df,years,obsvar,modvar,figsize):
     plt.tight_layout()
     
 # Why and how is the legend part of this broken???
-def all_years(data,obsvar,modvar,title):
+def all_years(data,obsvar,modvar,title,units='($\mu$M)'):
     start_date=dt.datetime(2007,1,1)
     end_date=dt.datetime(2019,12,31)
     fig,ax=plt.subplots(1,1,figsize=(19,8))
     ps=tsertser_graph(ax,data,obsvar,modvar,start_date,end_date)
     ax.legend(handles=ps)
-    ax.set_ylabel(f'{obsvar} ($\mu$M)')
+    ax.set_ylabel(f'{obsvar} {units}')
     ax.set_xlabel('Date')
     ax.set_title(title)
     plt.setp(ax.get_xticklabels(), rotation=30, horizontalalignment='right')
