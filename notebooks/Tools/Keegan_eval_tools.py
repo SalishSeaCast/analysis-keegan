@@ -3,6 +3,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+import math
 import pandas as pd
 import netCDF4 as nc
 import datetime as dt
@@ -250,6 +251,19 @@ def bySeason_hist2d(ax,fig,seasons,obsvar,modvar,lims,season_titles=['Jan-Mar','
     jp=hist2d(ax[1][1],fig,seasons[3],obsvar,modvar,lims)
     ax[1][1].set_title(season_titles[3])
     return 
+
+def byRegion_hist2d(datreg,regions,obsvar,modvar,lims):
+    fig,ax=plt.subplots(math.ceil(len(regions)/2),2,figsize=(16,26))
+    new_reg = [regions[i:i+2] for i in range(0, len(regions), 2)]
+    for ri,axi in zip(new_reg,ax):
+        for rj,axj in zip(ri,axi):
+            axj.set_xlim(lims)
+            axj.set_ylim(lims)
+            axj.set_aspect(1)
+            axj.set_xlabel('Obs')
+            axj.set_ylabel('Model')    
+            hist2d(axj,fig,datreg[rj],obsvar,modvar,lims)
+            axj.set_title(str(rj))
 
 def ErrErr(df,fig,ax,obsvar1,modvar1,obsvar2,modvar2,lims1,lims2):
     m=ax.scatter(df[modvar1]-df[obsvar1],df[modvar2]-df[obsvar2],c=df['Z'],s=1,cmap='gnuplot')
