@@ -476,10 +476,10 @@ def tsertser_graph(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]
                     ll=labels[ii]
                 else:
                     ll=u'{} {} $\leq$ {} $<$ {} {}'.format(sepvals[ii-1],sepunits,lname,sepvals[ii],sepunits).strip()
-            p0,=ax.plot(time0[iii],obs0[iii],'.',color=ocols[ii],label=f'Observed {ll}')
-            ps.append(p0)
-            p0,=ax.plot(time0[iii],mod0[iii],'.',color=mcols[ii],label=f'Modeled {ll}')
-            ps.append(p0)
+                p0,=ax.plot(time0[iii],obs0[iii],'.',color=ocols[ii],label=f'Observed {ll}')
+                ps.append(p0)
+                p0,=ax.plot(time0[iii],mod0[iii],'.',color=mcols[ii],label=f'Modeled {ll}')
+                ps.append(p0)
         # greater than max:
         iii=sep0>=sepvals[ii]
         if np.sum(iii)>0:
