@@ -6,19 +6,19 @@ The links below are to static renderings of the notebooks via
 Descriptions under the links below are from the first cell of the notebooks
 (if that cell contains Markdown or raw text).
 
-* ## [Puget_Thalweg_Plotting.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Thalweg_work/Puget_Thalweg_Plotting.ipynb)  
+* ## [Puget_Thalweg_Plotting.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Thalweg_work/Puget_Thalweg_Plotting.ipynb)  
     
     This script contains thalweg plots for Puget sound for a thalweg drawn through adrimarlty inlet to Main basin. These thalweg plots show how several model variables change along the thalwegs such as salinity and temperature.
 
-* ## [Thalweg Smoothing.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Thalweg_work/Thalweg Smoothing.ipynb)  
+* ## [Thalweg Smoothing.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Thalweg_work/Thalweg Smoothing.ipynb)  
     
-    Smooth the Thalweg
+    A script made for smoothing the thalweg. At the moment I am not actually sure what this script is used for and it has not been updated for use with the Puget Thalweg.
 
-* ## [Thalweg Work.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Thalweg_work/Thalweg Work.ipynb)  
+* ## [Thalweg Work.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Thalweg_work/Thalweg Work.ipynb)  
     
-    Determine the Thalweg in more Detail and Channelize it
+    A script made for Determining the Thalweg in more Detail and Channelizing it. At the moment I am not actually sure what this script is used for and it has not been updated for use with the Puget Thalweg.
 
-* ## [compute_thalweg.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Thalweg_work/compute_thalweg.ipynb)  
+* ## [compute_thalweg.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Thalweg_work/compute_thalweg.ipynb)  
     
     This script contains code that computes a rough thalweg through an area. I hope to eventually implement a second set of code that smooths out the created thalweg and saves itas a textfile. 
 

@@ -12,7 +12,7 @@ Descriptions under the links below are from the first cell of the notebooks
 
 * ## [Time_Series_evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/All_Years_Summaries/Time_Series_evaluation.ipynb)  
     
-    This script is meant to contain a bunch of timeseries diagrams that show how certain variables are changing over time. This notebook allows for multiple years to e viewed easily. 
+    This script contains timeseries diagrams that show how the data changes over all of the sample years for multiple depths.
 
 * ## [WADE_all_year_summary.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/All_Years_Summaries/WADE_all_year_summary.ipynb)  
     
