@@ -394,25 +394,30 @@ def multi_timese_graph(df,years,obsvar,modvar,figsize,units='($\mu$M)'):
     if type(years) == int:
         fig,ax=plt.subplots(1,1,figsize=figsize)
         ps=tsertser_graph(ax,df,obsvar,modvar,dt.datetime(years,1,1),dt.datetime(years,12,31),'Z',(15,22),'z','m')
-        ax.legend(handles=ps,bbox_to_anchor=[1,.6,0,0])
         ax.set_xlabel(f'Date',fontsize=20)
         ax.set_ylabel(f'{obsvar} {units}',fontsize=20)
         ax.set_title(str(years), fontsize=22)
         yearsFmt = mdates.DateFormatter('%d %b')
         ax.xaxis.set_major_formatter(yearsFmt)
+        legend = plt.legend(handles=ps,bbox_to_anchor=[1,.6,0,0])
+        plt.gca().add_artist(legend)
+        return ax
     elif type(years) == list:  
         fig, ax=plt.subplots(len(years),1,figsize=figsize)
         for d,Y in zip(range(len(years)),years):
             ps=tsertser_graph(ax[d],df,obsvar,modvar,dt.datetime(Y,1,1),dt.datetime(Y,12,31),'Z',(15,22),'z','m')
-            ax[d].legend(handles=ps,bbox_to_anchor=[1,.6,0,0])
             ax[d].set_xlabel(f'Date',fontsize=20)
             ax[d].set_ylabel(f'{obsvar} {units}',fontsize=20)
             ax[d].set_title(str(Y), fontsize=22)
             yearsFmt = mdates.DateFormatter('%d %b')
             ax[d].xaxis.set_major_formatter(yearsFmt)
+            legend = plt.legend(handles=ps,bbox_to_anchor=[1,.6,0,0])
+            plt.gca().add_artist(legend)
+            return ax
     else:
         raise(TypeError('years must be of type list or int'))
     plt.tight_layout()
+
     
 # Why and how is the legend part of this broken???
 def all_years(data,obsvar,modvar,title,units='($\mu$M)'):
