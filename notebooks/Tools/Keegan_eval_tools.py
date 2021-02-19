@@ -1,6 +1,7 @@
 """ Functions used to quickly graph evaluation plots for multiple stations and regions.
 """
 import numpy as np
+import numpy.polynomial.polynomial as poly
 import matplotlib.pyplot as plt
 import os
 import math
@@ -264,6 +265,7 @@ def byRegion_hist2d(datreg,regions,obsvar,modvar,lims):
             axj.set_ylabel('Model')    
             hist2d(axj,fig,datreg[rj],obsvar,modvar,lims)
             axj.set_title(str(rj))
+    return ax
 
 def ErrErr(df,fig,ax,obsvar1,modvar1,obsvar2,modvar2,lims1,lims2):
     m=ax.scatter(df[modvar1]-df[obsvar1],df[modvar2]-df[obsvar2],c=df['Z'],s=1,cmap='gnuplot')
@@ -289,6 +291,7 @@ def multi_depreg_graph(df,datyear,years,obsvar,modvar,phyvar_name,lims,figsize):
             ax[d][1].set_title(f'{phyvar_name} (g kg$^-1$) By Region for {Y}');
     # put a raise exception thing into this. 
     plt.tight_layout()
+    return ax
         
 # This has been altered but it has not been finished or tested !!!!!!!!!!!!!!!
 def multi_enverr_graph(df,datyear,years,obsvar,modvar,envvar,envvar_name,figsize,units='($\mu$M)'):
@@ -312,6 +315,7 @@ def multi_enverr_graph(df,datyear,years,obsvar,modvar,envvar,envvar_name,figsize
     else:
         raise(TypeError('years must be of type list or int'))
     plt.tight_layout()
+    return ax
         
 def multi_station_graph(df,datstat,obsvar,modvar,regions,lims,figsize=(14,40),units='($\mu$M)'):
     """ A function that creates a series of scatter plots and maps for each region
@@ -354,6 +358,7 @@ def multi_station_graph(df,datstat,obsvar,modvar,regions,lims,figsize=(14,40),un
         ax[d][1].legend(bbox_to_anchor=[1,.6,0,0])
         ax[d][1].set_xlim(-124, -122);
         ax[d][1].set_title(f'Observation Locations for {r}'); 
+    return ax
 
 def logt(x):
     return np.log10(x+.001)
@@ -369,6 +374,7 @@ def multi_meanerr_graph(df,datyear,years,obsvar,modvar,down,figsize,units='($\mu
             yearsFmt = mdates.DateFormatter('%d %b')
             ax[d].xaxis.set_major_formatter(yearsFmt)
     plt.tight_layout()
+    return ax
     
 def multi_timerror_graph(df,datyear,years,obsvar,modvar,figsize,units='($\mu$M)'):
     if type(years) == int:
@@ -389,6 +395,7 @@ def multi_timerror_graph(df,datyear,years,obsvar,modvar,figsize,units='($\mu$M)'
             yearsFmt = mdates.DateFormatter('%d %b')
             ax[d].xaxis.set_major_formatter(yearsFmt)
     plt.tight_layout()
+    return ax
     
 def multi_timese_graph(df,years,obsvar,modvar,figsize,units='($\mu$M)'):
     if type(years) == int:
@@ -433,6 +440,7 @@ def all_years(data,obsvar,modvar,title,units='($\mu$M)'):
     M = 15
     xticks = mpl.ticker.MaxNLocator(M)
     ax.xaxis.set_major_locator(xticks)
+    return ax
     
 #ready for evaltools
 def tsertser_graph(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]),lname='',sepunits='',
@@ -501,5 +509,121 @@ def tsertser_graph(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]
     ax.xaxis.set_major_formatter(yearsFmt)
     return ps
 
-#I think jupyter is weird about saving so I am adding extra stuff
-#hey look, stuff.
+def ts_trendline(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]),lname='',sepunits='',
+                  ocols=('blue','darkviolet','teal','green','deepskyblue'),
+                  mcols=('fuchsia','firebrick','orange','darkgoldenrod','maroon'),labels=''):
+    """ Plots trendlines by adding line plots to axes ax with df['dtUTC'] on x-axis, 
+        df[obsvar] and df[modvar] on y axis, and colors taken from a listas determined from 
+        df[sepvar] and a list of bin edges, sepvals. Trendlines are calculated by fitting a 
+        4 dimensional polynomial to the data. 
+    """
+    if len(lname)==0:
+        lname=sepvar
+    ps=list()
+    df=df.sort_values(by='dtUTC').dropna()
+    if len(sepvals)==0:
+        yd=list()
+        timepy=df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date)].dtUTC.dt.to_pydatetime()
+        obs0=et._deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[obsvar]])
+        mod0=et._deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[modvar]])
+        time0=et._deframe(timepy)
+        for i in time0:
+            yd.append((i - dt.datetime(i.year, 1, 1)).days + 1)
+        coefso = poly.polyfit(yd,obs0,4)
+        ffito = poly.polyval(yd, coefso)
+        coefsm = poly.polyfit(yd,mod0,4)
+        ffitm = poly.polyval(yd, coefsm)
+        p0,=ax.plot(time0, ffito, color=ocols[0], label=f'Observed {lname}',alpha=0.7, linestyle='dashed')
+        ps.append(p0)
+        p0,=ax.plot(time0, ffitm, color=mcols[0], label=f'Modeled {lname}',alpha=0.7, linestyle='dashed')
+        ps.append(p0)
+    else:
+        timepy=df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date)].dtUTC.dt.to_pydatetime()
+        obs0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[obsvar]])
+        mod0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[modvar]])
+        time0=et._deframe(timepy)
+        sep0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[sepvar]])
+        sepvals=np.sort(sepvals)
+                # less than min case:
+        yd=list()
+        ii=0
+        iii=sep0<sepvals[ii]
+        if np.sum(iii)>0:
+            #ll=u'{} < {} {}'.format(lname,sepvals[ii],sepunits).strip()
+            if len(labels)>0:
+                ll=labels[0]
+            else:
+                ll=u'{} $<$ {} {}'.format(lname,sepvals[ii],sepunits).strip()
+            for i in time0[iii]:
+                yd.append((i - dt.datetime(i.year, 1, 1)).days + 1)
+            coefso = poly.polyfit(yd,obs0[iii],4)
+            ffito = poly.polyval(yd, coefso)
+            coefsm = poly.polyfit(yd,mod0[iii],4)
+            ffitm = poly.polyval(yd, coefsm)
+            p0,=ax.plot(time0[iii], ffito, color=ocols[ii], label=f'Observed {ll}',alpha=0.4, linestyle='dashed')
+            ps.append(p0)
+            p0,=ax.plot(time0[iii], ffitm, color=mcols[ii], label=f'Modeled {ll}',alpha=0.4, linestyle='dashed')
+            ps.append(p0)
+        # between min and max:
+        yd=list()
+        for ii in range(1,len(sepvals)):
+            iii=np.logical_and(sep0<sepvals[ii],sep0>=sepvals[ii-1])
+            if np.sum(iii)>0:
+                #ll=u'{} {} \u2264 {} < {} {}'.format(sepvals[ii-1],sepunits,lname,sepvals[ii],sepunits).strip()
+                if len(labels)>0:
+                    ll=labels[ii]
+                else:
+                    ll=u'{} {} $\leq$ {} $<$ {} {}'.format(sepvals[ii-1],sepunits,lname,sepvals[ii],sepunits).strip()
+                for i in time0[iii]:
+                    yd.append((i - dt.datetime(i.year, 1, 1)).days + 1)
+                coefso = poly.polyfit(yd,obs0[iii],4)
+                ffito = poly.polyval(yd, coefso)
+                coefsm = poly.polyfit(yd,mod0[iii],4)
+                ffitm = poly.polyval(yd, coefsm)
+                p0,=ax.plot(time0[iii], ffito, color=ocols[ii], label=f'Observed {ll}',alpha=0.4, linestyle='dashed')
+                ps.append(p0)
+                p0,=ax.plot(time0[iii], ffitm, color=mcols[ii], label=f'Modeled {ll}',alpha=0.4, linestyle='dashed')
+                ps.append(p0)
+        # greater than max:
+        yd=list()
+        iii=sep0>=sepvals[ii]
+        if np.sum(iii)>0:
+            #ll=u'{} \u2265 {} {}'.format(lname,sepvals[ii],sepunits).strip()
+            if len(labels)>0:
+                ll=labels[ii+1]
+            else:
+                ll=u'{} $\geq$ {} {}'.format(lname,sepvals[ii],sepunits).strip()
+            for i in time0[iii]:
+                yd.append((i - dt.datetime(i.year, 1, 1)).days + 1)
+            coefso = poly.polyfit(yd,obs0[iii],4)
+            ffito = poly.polyval(yd, coefso)
+            coefsm = poly.polyfit(yd,mod0[iii],4)
+            ffitm = poly.polyval(yd, coefsm)
+            p0,=ax.plot(time0[iii], ffito, color=ocols[ii+1], label=f'Observed {ll}',alpha=0.4, linestyle='dashed')
+            ps.append(p0)
+            p0,=ax.plot(time0[iii], ffitm, color=mcols[ii+1], label=f'Modeled {ll}',alpha=0.4, linestyle='dashed')
+            ps.append(p0)
+    yearsFmt = mdates.DateFormatter('%d %b %y')
+    ax.xaxis.set_major_formatter(yearsFmt)
+    return ps
+
+def TsByRegion(datreg,regions,obsvar,modvar,year,loc='lower left',units='($\mu$M)',trendline=False):
+    fig,ax=plt.subplots(math.ceil(len(regions)/2),2,figsize=(13,13))
+    new_reg = [regions[i:i+2] for i in range(0, len(regions), 2)]
+    for ri,axi in zip(new_reg,ax):
+        for rj,axj in zip(ri,axi):
+            ps=tsertser_graph(axj,datreg[rj],obsvar,modvar,dt.datetime(year,1,1),dt.datetime(year,12,31))
+            axj.legend(handles=ps,prop={'size': 10},loc=loc)
+            axj.set_xlabel(f'Date',fontsize=13)
+            axj.set_ylabel(f'{obsvar} {units}',fontsize=13)
+            axj.set_title(f'Time series for {rj}', fontsize=13)
+            yearsFmt = mdates.DateFormatter('%d %b')
+            axj.xaxis.set_major_formatter(yearsFmt)
+            for tick in axj.xaxis.get_major_ticks():
+                tick.label.set_fontsize(13)
+            for tick in axj.yaxis.get_major_ticks():
+                tick.label.set_fontsize(13)
+            plt.tight_layout()
+            plt.setp(axj.get_xticklabels(), rotation=30, horizontalalignment='right')
+            if trendline == True:
+                ts_trendline(axj,datreg[rj],obsvar,modvar,dt.datetime(year,1,1),dt.datetime(year,12,31))
