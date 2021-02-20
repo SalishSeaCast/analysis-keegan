@@ -8,7 +8,6 @@ year_range=range(2007,2019)
 for y in year_range:
     years=[y,y+1]
     year=y+1
-    modver='201905'
     modver='nowcast-green.201905'
     PATH= '/results2/SalishSea/nowcast-green.201905/'
     saveloc='/ocean/kflanaga/MEOPAR/savedData'

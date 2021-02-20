@@ -520,7 +520,8 @@ def ts_trendline(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]),
     if len(lname)==0:
         lname=sepvar
     ps=list()
-    df=df.sort_values(by='dtUTC').dropna()
+    df=df.sort_values(by='dtUTC')
+    df=df.dropna(axis=0,subset=[obsvar,modvar,'dtUTC'])
     if len(sepvals)==0:
         yd=list()
         timepy=df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date)].dtUTC.dt.to_pydatetime()
