@@ -4,6 +4,7 @@ import numpy as np
 import numpy.polynomial.polynomial as poly
 import matplotlib.pyplot as plt
 import os
+from scipy import optimize as opt
 import math
 import pandas as pd
 import netCDF4 as nc
@@ -408,7 +409,7 @@ def multi_timese_graph(df,years,obsvar,modvar,figsize,units='($\mu$M)'):
         ax.xaxis.set_major_formatter(yearsFmt)
         legend = plt.legend(handles=ps,bbox_to_anchor=[1,.6,0,0])
         plt.gca().add_artist(legend)
-        return ax
+        return ps,ax
     elif type(years) == list:  
         fig, ax=plt.subplots(len(years),1,figsize=figsize)
         for d,Y in zip(range(len(years)),years):
@@ -420,7 +421,7 @@ def multi_timese_graph(df,years,obsvar,modvar,figsize,units='($\mu$M)'):
             ax[d].xaxis.set_major_formatter(yearsFmt)
             legend = plt.legend(handles=ps,bbox_to_anchor=[1,.6,0,0])
             plt.gca().add_artist(legend)
-            return ax
+            return ps,ax
     else:
         raise(TypeError('years must be of type list or int'))
     plt.tight_layout()
@@ -523,30 +524,26 @@ def ts_trendline(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]),
     df=df.sort_values(by='dtUTC')
     df=df.dropna(axis=0,subset=[obsvar,modvar,'dtUTC'])
     if len(sepvals)==0:
-        yd=list()
-        timepy=df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date)].dtUTC.dt.to_pydatetime()
         obs0=et._deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[obsvar]])
         mod0=et._deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[modvar]])
-        time0=et._deframe(timepy)
-        for i in time0:
-            yd.append((i - dt.datetime(i.year, 1, 1)).days + 1)
-        coefso = poly.polyfit(yd,obs0,4)
-        ffito = poly.polyval(yd, coefso)
-        coefsm = poly.polyfit(yd,mod0,4)
-        ffitm = poly.polyval(yd, coefsm)
+        time0=et._deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),['dtUTC']])
+        yd0=et._deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),['YD']])
+        coefso = poly.polyfit(yd0,obs0,4)
+        ffito = poly.polyval(yd0, coefso)
+        coefsm = poly.polyfit(yd0,mod0,4)
+        ffitm = poly.polyval(yd0, coefsm)
         p0,=ax.plot(time0, ffito, color=ocols[0], label=f'Observed {lname}',alpha=0.7, linestyle='dashed')
         ps.append(p0)
         p0,=ax.plot(time0, ffitm, color=mcols[0], label=f'Modeled {lname}',alpha=0.7, linestyle='dashed')
         ps.append(p0)
     else:
-        timepy=df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date)].dtUTC.dt.to_pydatetime()
         obs0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[obsvar]])
         mod0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[modvar]])
-        time0=et._deframe(timepy)
+        time0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),['dtUTC']])
+        yd0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),['YD']])
         sep0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[sepvar]])
         sepvals=np.sort(sepvals)
                 # less than min case:
-        yd=list()
         ii=0
         iii=sep0<sepvals[ii]
         if np.sum(iii)>0:
@@ -555,18 +552,15 @@ def ts_trendline(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]),
                 ll=labels[0]
             else:
                 ll=u'{} $<$ {} {}'.format(lname,sepvals[ii],sepunits).strip()
-            for i in time0[iii]:
-                yd.append((i - dt.datetime(i.year, 1, 1)).days + 1)
-            coefso = poly.polyfit(yd,obs0[iii],4)
-            ffito = poly.polyval(yd, coefso)
-            coefsm = poly.polyfit(yd,mod0[iii],4)
-            ffitm = poly.polyval(yd, coefsm)
+            coefso = poly.polyfit(yd0[iii],obs0[iii],4)
+            ffito = poly.polyval(yd0[iii], coefso)
+            coefsm = poly.polyfit(yd0[iii],mod0[iii],4)
+            ffitm = poly.polyval(yd0[iii], coefsm)
             p0,=ax.plot(time0[iii], ffito, color=ocols[ii], label=f'Observed {ll}',alpha=0.4, linestyle='dashed')
             ps.append(p0)
             p0,=ax.plot(time0[iii], ffitm, color=mcols[ii], label=f'Modeled {ll}',alpha=0.4, linestyle='dashed')
             ps.append(p0)
         # between min and max:
-        yd=list()
         for ii in range(1,len(sepvals)):
             iii=np.logical_and(sep0<sepvals[ii],sep0>=sepvals[ii-1])
             if np.sum(iii)>0:
@@ -575,18 +569,15 @@ def ts_trendline(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]),
                     ll=labels[ii]
                 else:
                     ll=u'{} {} $\leq$ {} $<$ {} {}'.format(sepvals[ii-1],sepunits,lname,sepvals[ii],sepunits).strip()
-                for i in time0[iii]:
-                    yd.append((i - dt.datetime(i.year, 1, 1)).days + 1)
-                coefso = poly.polyfit(yd,obs0[iii],4)
-                ffito = poly.polyval(yd, coefso)
-                coefsm = poly.polyfit(yd,mod0[iii],4)
-                ffitm = poly.polyval(yd, coefsm)
+                coefso = poly.polyfit(yd0[iii],obs0[iii],4)
+                ffito = poly.polyval(yd0[iii], coefso)
+                coefsm = poly.polyfit(yd0[iii],mod0[iii],4)
+                ffitm = poly.polyval(yd0[iii], coefsm)
                 p0,=ax.plot(time0[iii], ffito, color=ocols[ii], label=f'Observed {ll}',alpha=0.4, linestyle='dashed')
                 ps.append(p0)
                 p0,=ax.plot(time0[iii], ffitm, color=mcols[ii], label=f'Modeled {ll}',alpha=0.4, linestyle='dashed')
                 ps.append(p0)
         # greater than max:
-        yd=list()
         iii=sep0>=sepvals[ii]
         if np.sum(iii)>0:
             #ll=u'{} \u2265 {} {}'.format(lname,sepvals[ii],sepunits).strip()
@@ -594,15 +585,101 @@ def ts_trendline(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]),
                 ll=labels[ii+1]
             else:
                 ll=u'{} $\geq$ {} {}'.format(lname,sepvals[ii],sepunits).strip()
-            for i in time0[iii]:
-                yd.append((i - dt.datetime(i.year, 1, 1)).days + 1)
-            coefso = poly.polyfit(yd,obs0[iii],4)
-            ffito = poly.polyval(yd, coefso)
-            coefsm = poly.polyfit(yd,mod0[iii],4)
-            ffitm = poly.polyval(yd, coefsm)
+            coefso = poly.polyfit(yd0[iii],obs0[iii],4)
+            ffito = poly.polyval(yd0[iii], coefso)
+            coefsm = poly.polyfit(yd0[iii],mod0[iii],4)
+            ffitm = poly.polyval(yd0[iii], coefsm)
             p0,=ax.plot(time0[iii], ffito, color=ocols[ii+1], label=f'Observed {ll}',alpha=0.4, linestyle='dashed')
             ps.append(p0)
             p0,=ax.plot(time0[iii], ffitm, color=mcols[ii+1], label=f'Modeled {ll}',alpha=0.4, linestyle='dashed')
+            ps.append(p0)
+    yearsFmt = mdates.DateFormatter('%d %b %y')
+    ax.xaxis.set_major_formatter(yearsFmt)
+    return ps
+
+def sin_trendline(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]),lname='',sepunits='',
+                  ocols=('blue','darkviolet','teal','green','deepskyblue'),
+                  mcols=('fuchsia','firebrick','orange','darkgoldenrod','maroon'),labels=''):
+    """ Plots trendlines by adding line plots to axes ax with df['dtUTC'] on x-axis, 
+        df[obsvar] and df[modvar] on y axis, and colors taken from a listas determined from 
+        df[sepvar] and a list of bin edges, sepvals. Trendlines are calculated by fitting a 
+        4 dimensional polynomial to the data.
+    """
+    #cleaning data and defining sub-functions
+    def sin_model(t,A,B,C,D,E,F,G):
+        x=(A*np.sin((2*np.pi*t)/365)+B*np.cos((2*np.pi*t)/365)+C*np.sin((4*np.pi*t)/365)+D*np.cos((4*np.pi*t)/365)+E*np.sin((6*np.pi*t)/365)+A*np.cos((6*np.pi*t)/365)+G)
+        return x
+    if len(lname)==0:
+        lname=sepvar
+    ps=list()
+    df=df.dropna(axis=0,subset=[obsvar,modvar,'dtUTC'])
+    if len(sepvals)==0:
+        obs0=et._deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[obsvar]])
+        mod0=et._deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[modvar]])
+        time0=et._deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),['dtUTC']])
+        yd0=et._deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),['YD']])
+        opar, opar_cov = opt.curve_fit(sin_model, yd0, obs0)
+        mpar, mpar_cov = opt.curve_fit(sin_model, yd0, mod0)
+        p0,=ax.plot(time0, sin_model(yd0, *opar), color=ocols[0], label=f'Observed {lname}',alpha=0.7, linestyle='dashed')
+        ps.append(p0)
+        p0,=ax.plot(time0, sin_model(yd0, *mpar), color=mcols[0], label=f'Observed {lname}',alpha=0.7, linestyle='dashed')
+        ps.append(p0)
+    else:
+        obs0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[obsvar]])
+        mod0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[modvar]])
+        time0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),['dtUTC']])
+        yd0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),['YD']])
+        sep0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[sepvar]])
+        sepvals=np.sort(sepvals)
+                # less than min case:
+        ii=0
+        iii=sep0<sepvals[ii]
+        if np.sum(iii)>0:
+            #ll=u'{} < {} {}'.format(lname,sepvals[ii],sepunits).strip()
+            if len(labels)>0:
+                ll=labels[0]
+            else:
+                ll=u'{} $<$ {} {}'.format(lname,sepvals[ii],sepunits).strip()
+            if len(yd0[iii]) < 7:
+                raise Exception("the number of data points in each category must be greater than 7 (the number of variables in the sinusoidal model)")
+            opar, opar_cov = opt.curve_fit(sin_model, yd0[iii], obs0[iii])
+            mpar, mpar_cov = opt.curve_fit(sin_model, yd0[iii], mod0[iii])
+            p0,=ax.plot(time0[iii], sin_model(yd0[iii], *opar), color=ocols[ii], label=f'Observed {lname}',alpha=0.7, linestyle='dashed')
+            ps.append(p0)
+            p0,=ax.plot(time0[iii], sin_model(yd0[iii], *mpar), color=mcols[ii], label=f'Observed {lname}',alpha=0.7, linestyle='dashed')
+            ps.append(p0)
+        # between min and max:
+        for ii in range(1,len(sepvals)):
+            iii=np.logical_and(sep0<sepvals[ii],sep0>=sepvals[ii-1])
+            if np.sum(iii)>0:
+                #ll=u'{} {} \u2264 {} < {} {}'.format(sepvals[ii-1],sepunits,lname,sepvals[ii],sepunits).strip()
+                if len(labels)>0:
+                    ll=labels[ii]
+                else:
+                    ll=u'{} {} $\leq$ {} $<$ {} {}'.format(sepvals[ii-1],sepunits,lname,sepvals[ii],sepunits).strip()
+                if len(yd0[iii]) < 7:
+                    raise Exception("the number of data points in each category must be greater than 7 (the number of variables in the sinusoidal model)")
+                opar, opar_cov = opt.curve_fit(sin_model, yd0[iii], obs0[iii])
+                mpar, mpar_cov = opt.curve_fit(sin_model, yd0[iii], mod0[iii])
+                p0,=ax.plot(time0[iii], sin_model(yd0[iii], *opar), color=ocols[ii], label=f'Observed {lname}',alpha=0.7, linestyle='dashed')
+                ps.append(p0)
+                p0,=ax.plot(time0[iii], sin_model(yd0[iii], *mpar), color=mcols[ii], label=f'Observed {lname}',alpha=0.7, linestyle='dashed')
+                ps.append(p0)
+        # greater than max:
+        iii=sep0>=sepvals[ii]
+        if np.sum(iii)>0:
+            #ll=u'{} \u2265 {} {}'.format(lname,sepvals[ii],sepunits).strip()
+            if len(labels)>0:
+                ll=labels[ii+1]
+            else:
+                ll=u'{} $\geq$ {} {}'.format(lname,sepvals[ii],sepunits).strip()
+            if len(yd0[iii]) < 7:
+                raise Exception("the number of data points in each category must be greater than 7 (the number of variables in the sinusoidal model)")
+            opar, opar_cov = opt.curve_fit(sin_model, yd0[iii], obs0[iii])
+            mpar, mpar_cov = opt.curve_fit(sin_model, yd0[iii], mod0[iii])
+            p0,=ax.plot(time0[iii], sin_model(yd0[iii], *opar), color=ocols[ii+1], label=f'Observed {lname}',alpha=0.7, linestyle='dashed')
+            ps.append(p0)
+            p0,=ax.plot(time0[iii], sin_model(yd0[iii], *mpar), color=mcols[ii+1], label=f'Observed {lname}',alpha=0.7, linestyle='dashed')
             ps.append(p0)
     yearsFmt = mdates.DateFormatter('%d %b %y')
     ax.xaxis.set_major_formatter(yearsFmt)
