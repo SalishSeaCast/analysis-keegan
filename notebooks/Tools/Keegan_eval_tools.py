@@ -235,7 +235,7 @@ def hist2d(ax,fig,df,obsvar,modvar,lims,fontsize=12):
     plt.tight_layout()
     return ps  
 
-def bySeason_hist2d(ax,fig,seasons,obsvar,modvar,lims,season_titles=['Jan-Mar','Apr','May-Aug','Sep-Dec']):
+def bySeason_hist2d(ax,fig,seasons,obsvar,modvar,lims,season_titles=['Dec-Feb','Mar-May','Jun-Aug','Sep-Nov']):
     for axj in ax:
         for axi in axj:
             axi.plot(lims,lims,'k-')
