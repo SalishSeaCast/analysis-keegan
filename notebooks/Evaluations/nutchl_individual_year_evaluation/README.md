@@ -10,6 +10,10 @@ Descriptions under the links below are from the first cell of the notebooks
     
     A notebook which contains an evaluation of the SalishSeaCast model within PugetSound for the year 2018. More specifically, it compares Observed data on chlorophyll and nutrient concentrations collected from bottle data and compares it to various model phytoplankon outputs. This evaluation includes scatter plots visualizing the similarity of observed and model data as well as tables of evaluation statistics.
 
+* ## [2019_nutchl_evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/nutchl_individual_year_evaluation/2019_nutchl_evaluation.ipynb)  
+    
+    A notebook which contains an evaluation of the SalishSeaCast model within PugetSound for the year 2018. More specifically, it compares Observed data on chlorophyll and nutrient concentrations collected from bottle data and compares it to various model phytoplankon outputs. This evaluation includes scatter plots visualizing the similarity of observed and model data as well as tables of evaluation statistics.
+
 
 ##License
 
