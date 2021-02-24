@@ -204,7 +204,7 @@ def byStation(ax,df,datstat,region,obsvar,modvar,lims):
     ax.set_aspect(1)
     return ps,l
 
-def bySeason(ax,seasons,obsvar,modvar,lims,season_titles=['Jan-Mar','Apr','May-Aug','Sep-Dec']):
+def bySeason(ax,seasons,obsvar,modvar,lims,season_titles=['Dec-Feb','Mar-May','Jun-Aug','Sep-Nov']):
     for axi in ax:
         axi.plot(lims,lims,'k-')
         axi.set_xlim(lims)
