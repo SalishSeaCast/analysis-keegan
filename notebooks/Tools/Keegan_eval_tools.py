@@ -5,6 +5,7 @@ import numpy.polynomial.polynomial as poly
 import matplotlib.pyplot as plt
 import os
 from scipy import optimize as opt
+from scipy.stats import linregress
 import math
 import pandas as pd
 import netCDF4 as nc
@@ -801,3 +802,20 @@ def TsByRegion(datreg,regions,obsvar,modvar,year,loc='lower left',units='($\mu$M
             plt.setp(axj.get_xticklabels(), rotation=30, horizontalalignment='right')
             if trendline == True:
                 ts_trendline(axj,datreg[rj],obsvar,modvar,dt.datetime(year,1,1),dt.datetime(year,12,31))
+                
+def err_corr_plot(ax,df,modvar,obsvar,envvar):
+    df=df.dropna(axis=0,subset=[obsvar,modvar,envvar,'dtUTC'])
+    corr=linregress(df[envvar],df[modvar]-df[obsvar])
+    ax.plot(df[envvar],corr[0]*df[envvar]+corr[1])
+
+
+def err_corr_stats(envvar,modvar,obsvar):
+    env0=_deframe(envvar)
+    obs0=_deframe(obsvar)
+    mod0=_deframe(modvar)
+    iii=np.logical_and(~np.isnan(mod0-obs0),~np.isnan(env0))
+    env=env0[iii]
+    obs=obs0[iii]
+    mod=mod0[iii]
+    corr=linregress(env,mod-obs)
+    return corr[2]**2, corr[3]
