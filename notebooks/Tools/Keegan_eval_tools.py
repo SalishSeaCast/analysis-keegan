@@ -819,3 +819,25 @@ def err_corr_stats(envvar,modvar,obsvar):
     mod=mod0[iii]
     corr=linregress(env,mod-obs)
     return corr[2]**2, corr[3]
+
+def Display_CorrStats(statdict,level='Subset',suborder=None):
+    # stats dict starting from variable level
+    cols={'Subset':('Subset','Metric',''),
+          'Variable':('Variable','Subset','Metric',''),
+          'Environmental Variable':('Environmental Variable','Variable','Subset','Metric','')}
+    ind={'Subset':['Subset','Metric'],
+         'Variable':['Variable','Subset','Metric'],
+         'Environmental Variable':['Environmental Variable','Variable','Subset','Metric']}
+    pcols={'Subset':['Metric'],
+           'Variable':['Metric'],
+           'Environmental Variable':['Metric']}
+    allrows=et._flatten_nested_dict(statdict)
+    tdf=pd.DataFrame(allrows,columns=cols[level])
+    if suborder is not None:
+        subD={suborder[ii]: ii for ii in range(0,len(suborder))}
+        tdf['Order']=[subD[tdf['Subset'][ii]] for ii in range(0,len(tdf['Subset']))]
+    tdf.set_index(ind[level],inplace=True)
+    tbl=pd.pivot_table(tdf,index=ind[level][:-1],columns=pcols[level]).rename_axis(index={'Order':None},columns={'Metric':None}).style.format({
+        'R$^2$':'{:E}',
+        'P Value':'{:E}'               })
+    return tbl,tdf
