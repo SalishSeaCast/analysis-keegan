@@ -267,6 +267,8 @@ def byRegion_hist2d(datreg,regions,obsvar,modvar,lims):
             axj.set_ylabel('Model')    
             hist2d(axj,fig,datreg[rj],obsvar,modvar,lims)
             axj.set_title(str(rj))
+    if (len(regions) % 2) != 0:
+        fig.delaxes(ax[-1][-1])
     return ax
 
 def ErrErr(df,fig,ax,obsvar1,modvar1,obsvar2,modvar2,lims1,lims2):
@@ -715,7 +717,9 @@ def TsByRegion(datreg,regions,obsvar,modvar,year,loc='lower left',units='($\mu$M
             plt.setp(axj.get_xticklabels(), rotation=30, horizontalalignment='right')
             if trendline == True:
                 ts_trendline(axj,datreg[rj],obsvar,modvar,dt.datetime(year,1,1),dt.datetime(year,12,31))
-                
+    if (len(regions) % 2) != 0:
+        fig.delaxes(ax[-1][-1])
+        
 def err_corr_plot(ax,df,modvar,obsvar,envvar):
     df=df.dropna(axis=0,subset=[obsvar,modvar,envvar,'dtUTC'])
     corr=linregress(df[envvar],df[modvar]-df[obsvar])
