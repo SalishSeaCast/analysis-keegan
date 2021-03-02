@@ -6,6 +6,10 @@ The links below are to static renderings of the notebooks via
 Descriptions under the links below are from the first cell of the notebooks
 (if that cell contains Markdown or raw text).
 
+* ## [CTD_all_years_summary.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/All_Years_Summaries/CTD_all_years_summary.ipynb)  
+    
+    A notebook which contains an evaluation of the SalishSeaCast model within PugetSound. More specifically, it compares Observed data on temperature, salinity, and chlorophyll concentrations  collected from CTD data and compares it to various model phytoplankon outputs. This evaluation includes scatter plots and 2d histograms visualizing the similarity of observed and model data as well as tables of evaluation statistics. 
+
 * ## [Chlbot_all_years_Evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/All_Years_Summaries/Chlbot_all_years_Evaluation.ipynb)  
     
     A notebook which contains an evaluation of the SalishSeaCast model within PugetSound for the year 2009. More specifically, it compares Observed data on chlorophyll concentrations collected from bottle data and compares it to various model phytoplankon outputs. This evaluation includes scatter plots visualizing the similarity of observed and model data as well as tables of evaluation statistics.
