@@ -404,7 +404,7 @@ def multi_timerror_graph(df,datyear,years,obsvar,modvar,figsize,units='($\mu$M)'
 def multi_timese_graph(df,years,obsvar,modvar,figsize,units='($\mu$M)'):
     if type(years) == int:
         fig,ax=plt.subplots(1,1,figsize=figsize)
-        ps=tsertser_graph(ax,df,obsvar,modvar,dt.datetime(years,1,1),dt.datetime(years,12,31),'Z',(15,22),'z','m')
+        ps=tsertser_graph(ax,df,obsvar,modvar,dt.datetime(years,1,1),dt.datetime(years,12,31),'Z',(10,22),'z','m')
         ax.set_xlabel(f'Date',fontsize=20)
         ax.set_ylabel(f'{obsvar} {units}',fontsize=20)
         ax.set_title(str(years), fontsize=22)
@@ -416,7 +416,7 @@ def multi_timese_graph(df,years,obsvar,modvar,figsize,units='($\mu$M)'):
     elif type(years) == list:  
         fig, ax=plt.subplots(len(years),1,figsize=figsize)
         for d,Y in zip(range(len(years)),years):
-            ps=tsertser_graph(ax[d],df,obsvar,modvar,dt.datetime(Y,1,1),dt.datetime(Y,12,31),'Z',(15,22),'z','m')
+            ps=tsertser_graph(ax[d],df,obsvar,modvar,dt.datetime(Y,1,1),dt.datetime(Y,12,31),'Z',(10,22),'z','m')
             ax[d].set_xlabel(f'Date',fontsize=20)
             ax[d].set_ylabel(f'{obsvar} {units}',fontsize=20)
             ax[d].set_title(str(Y), fontsize=22)
@@ -758,3 +758,9 @@ def Display_CorrStats(statdict,level='Subset',suborder=None):
         'R$^2$':'{:E}',
         'P Value':'{:E}'               })
     return tbl,tdf
+
+def get_grid_coor(lat,lon):
+    method = 'nearest'
+    jj = jjii.jj.sel(lats=lat, lons=lon, method=method).item()
+    ii = jjii.ii.sel(lats=lat, lons=lon, method=method).item()
+    print (ii, jj)
