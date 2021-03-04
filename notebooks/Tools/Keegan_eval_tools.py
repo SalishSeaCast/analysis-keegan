@@ -18,6 +18,7 @@ import matplotlib.dates as mdates
 import cmocean as cmo
 import scipy.interpolate as sinterp
 import pickle
+import warnings
 import cmocean
 import json
 import f90nml
@@ -401,10 +402,11 @@ def multi_timerror_graph(df,datyear,years,obsvar,modvar,figsize,units='($\mu$M)'
     plt.tight_layout()
     return ax
     
-def multi_timese_graph(df,years,obsvar,modvar,figsize,units='($\mu$M)'):
+def multi_timese_graph(df,years,obsvar,modvar,figsize,units='($\mu$M)',depth_range=(15,22)):
     if type(years) == int:
         fig,ax=plt.subplots(1,1,figsize=figsize)
-        ps=tsertser_graph(ax,df,obsvar,modvar,dt.datetime(years,1,1),dt.datetime(years,12,31),'Z',(10,22),'z','m')
+        ps=tsertser_graph(ax,df,obsvar,modvar,dt.datetime(years,1,1),
+                        dt.datetime(years,12,31),'Z',depth_range,'z','m')
         ax.set_xlabel(f'Date',fontsize=20)
         ax.set_ylabel(f'{obsvar} {units}',fontsize=20)
         ax.set_title(str(years), fontsize=22)
@@ -416,7 +418,8 @@ def multi_timese_graph(df,years,obsvar,modvar,figsize,units='($\mu$M)'):
     elif type(years) == list:  
         fig, ax=plt.subplots(len(years),1,figsize=figsize)
         for d,Y in zip(range(len(years)),years):
-            ps=tsertser_graph(ax[d],df,obsvar,modvar,dt.datetime(Y,1,1),dt.datetime(Y,12,31),'Z',(10,22),'z','m')
+            ps=tsertser_graph(ax[d],df,obsvar,modvar,dt.datetime(Y,1,1),
+                              dt.datetime(Y,12,31),'Z',depth_range,'z','m')
             ax[d].set_xlabel(f'Date',fontsize=20)
             ax[d].set_ylabel(f'{obsvar} {units}',fontsize=20)
             ax[d].set_title(str(Y), fontsize=22)
@@ -431,11 +434,14 @@ def multi_timese_graph(df,years,obsvar,modvar,figsize,units='($\mu$M)'):
 
     
 # Why and how is the legend part of this broken???
-def all_years(data,obsvar,modvar,title,units='($\mu$M)'):
+def all_years(data,obsvar,modvar,title,units='($\mu$M)',by_depth=False,sepvals=(15,22)):
     start_date=dt.datetime(2007,1,1)
     end_date=dt.datetime(2019,12,31)
     fig,ax=plt.subplots(1,1,figsize=(19,8))
-    ps=tsertser_graph(ax,data,obsvar,modvar,start_date,end_date)
+    if by_depth == False:
+        ps=tsertser_graph(ax,data,obsvar,modvar,start_date,end_date)
+    if by_depth == True: 
+        ps=tsertser_graph(ax,data,obsvar,modvar,start_date,end_date,'Z',sepvals,'z','m')
     ax.legend(handles=ps)
     ax.set_ylabel(f'{obsvar} {units}')
     ax.set_xlabel('Date')
@@ -544,7 +550,7 @@ def ts_trendline(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]),
         mpar, mpar_cov = opt.curve_fit(sin_model, yd0, mod0)
         p0,=ax.plot(time0, sin_model(yd0, *opar), color=ocols[0], label=f'Observed {lname}',alpha=0.7, linestyle='dashed')
         ps.append(p0)
-        p0,=ax.plot(time0, sin_model(yd0, *mpar), color=mcols[0], label=f'Observed {lname}',alpha=0.7, linestyle='dashed')
+        p0,=ax.plot(time0, sin_model(yd0, *mpar), color=mcols[0], label=f'Modeled {lname}',alpha=0.7, linestyle='dashed')
         ps.append(p0)
     else:
         obs0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[obsvar]])
@@ -561,15 +567,16 @@ def ts_trendline(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]),
             if len(labels)>0:
                 ll=labels[0]
             else:
-                ll=u'{} $<$ {} {}'.format(lname,sepvals[ii],sepunits).strip()
+                ll=u'{} $<$ {} {}'.format(lname,sepvals[ii],sepunits).strip()           
             if len(yd0[iii]) < 7:
-                raise Exception("the number of data points in each category must be greater than 7 (the number of variables in the sinusoidal model)")
-            opar, opar_cov = opt.curve_fit(sin_model, yd0[iii], obs0[iii])
-            mpar, mpar_cov = opt.curve_fit(sin_model, yd0[iii], mod0[iii])
-            p0,=ax.plot(time0[iii], sin_model(yd0[iii], *opar), color=ocols[ii], label=f'Observed {ll}',alpha=0.7, linestyle='dashed')
-            ps.append(p0)
-            p0,=ax.plot(time0[iii], sin_model(yd0[iii], *mpar), color=mcols[ii], label=f'Observed {ll}',alpha=0.7, linestyle='dashed')
-            ps.append(p0)
+                print("The number of data points below min was less that the number of variables in the model. Therefore, data points below min have not been plotted ")
+            else:
+                opar, opar_cov = opt.curve_fit(sin_model, yd0[iii], obs0[iii])
+                mpar, mpar_cov = opt.curve_fit(sin_model, yd0[iii], mod0[iii])
+                p0,=ax.plot(time0[iii], sin_model(yd0[iii], *opar), color=ocols[ii], label=f'Observed {ll}',alpha=0.7, linestyle='dashed')
+                ps.append(p0)
+                p0,=ax.plot(time0[iii], sin_model(yd0[iii], *mpar), color=mcols[ii], label=f'Modeled{ll}',alpha=0.7, linestyle='dashed')
+                ps.append(p0)
         # between min and max:
         for ii in range(1,len(sepvals)):
             iii=np.logical_and(sep0<sepvals[ii],sep0>=sepvals[ii-1])
@@ -580,13 +587,14 @@ def ts_trendline(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]),
                 else:
                     ll=u'{} {} $\leq$ {} $<$ {} {}'.format(sepvals[ii-1],sepunits,lname,sepvals[ii],sepunits).strip()
                 if len(yd0[iii]) < 7:
-                    raise Exception("the number of data points in each category must be greater than 7 (the number of variables in the sinusoidal model)")
-                opar, opar_cov = opt.curve_fit(sin_model, yd0[iii], obs0[iii])
-                mpar, mpar_cov = opt.curve_fit(sin_model, yd0[iii], mod0[iii])
-                p0,=ax.plot(time0[iii], sin_model(yd0[iii], *opar), color=ocols[ii], label=f'Observed {ll}',alpha=0.7, linestyle='dashed')
-                ps.append(p0)
-                p0,=ax.plot(time0[iii], sin_model(yd0[iii], *mpar), color=mcols[ii], label=f'Observed {ll}',alpha=0.7, linestyle='dashed')
-                ps.append(p0)
+                    print("The number of data points inbetween min and max was less that the number of variables in the model. Therefore, data points inbetween min and max have not been plotted ")     
+                else:
+                    opar, opar_cov = opt.curve_fit(sin_model, yd0[iii], obs0[iii])
+                    mpar, mpar_cov = opt.curve_fit(sin_model, yd0[iii], mod0[iii])
+                    p0,=ax.plot(time0[iii], sin_model(yd0[iii], *opar), color=ocols[ii], label=f'Observed {ll}',alpha=0.7, linestyle='dashed')
+                    ps.append(p0)
+                    p0,=ax.plot(time0[iii], sin_model(yd0[iii], *mpar), color=mcols[ii], label=f'Modeled {ll}',alpha=0.7, linestyle='dashed')
+                    ps.append(p0)
         # greater than max:
         iii=sep0>=sepvals[ii]
         if np.sum(iii)>0:
@@ -596,13 +604,14 @@ def ts_trendline(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]),
             else:
                 ll=u'{} $\geq$ {} {}'.format(lname,sepvals[ii],sepunits).strip()
             if len(yd0[iii]) < 7:
-                raise Exception("the number of data points in each category must be greater than 7 (the number of variables in the sinusoidal model)")
-            opar, opar_cov = opt.curve_fit(sin_model, yd0[iii], obs0[iii])
-            mpar, mpar_cov = opt.curve_fit(sin_model, yd0[iii], mod0[iii])
-            p0,=ax.plot(time0[iii], sin_model(yd0[iii], *opar), color=ocols[ii+1], label=f'Observed {ll}',alpha=0.7, linestyle='dashed')
-            ps.append(p0)
-            p0,=ax.plot(time0[iii], sin_model(yd0[iii], *mpar), color=mcols[ii+1], label=f'Observed {ll}',alpha=0.7, linestyle='dashed')
-            ps.append(p0)
+                print("The number of data points above max was less that the number of variables in the model. Therefore, data points above max have not been plotted ")
+            else:
+                opar, opar_cov = opt.curve_fit(sin_model, yd0[iii], obs0[iii])
+                mpar, mpar_cov = opt.curve_fit(sin_model, yd0[iii], mod0[iii])
+                p0,=ax.plot(time0[iii], sin_model(yd0[iii], *opar), color=ocols[ii+1], label=f'Observed {ll}',alpha=0.7, linestyle='dashed')
+                ps.append(p0)
+                p0,=ax.plot(time0[iii], sin_model(yd0[iii], *mpar), color=mcols[ii+1], label=f'Modeled {ll}',alpha=0.7, linestyle='dashed')
+                ps.append(p0)
     yearsFmt = mdates.DateFormatter('%d %b %y')
     ax.xaxis.set_major_formatter(yearsFmt)
     return ps
