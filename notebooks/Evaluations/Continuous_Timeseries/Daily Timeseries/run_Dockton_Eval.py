@@ -4,7 +4,7 @@ import os
 
 # PSF eval:
 paramlistPSF=list()
-year_range=range(2010,2020)
+year_range=range(2016,2020)
 for y in year_range:
     Mooring='Dockton'
     PATH= '/results2/SalishSea/nowcast-green.201905/'

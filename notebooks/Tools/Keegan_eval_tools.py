@@ -527,7 +527,7 @@ def tsertser_graph(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]
 
 def ts_trendline(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]),lname='',sepunits='',
                   ocols=('blue','darkviolet','teal','green','deepskyblue'),
-                  mcols=('fuchsia','firebrick','orange','darkgoldenrod','maroon'),labels=''):
+                  mcols=('fuchsia','firebrick','orange','darkgoldenrod','maroon'),labels='',error=False):
     """ Plots trendlines by adding line plots to axes ax with df['dtUTC'] on x-axis, 
         df[obsvar] and df[modvar] on y axis, and colors taken from a listas determined from 
         df[sepvar] and a list of bin edges, sepvals. Trendlines are calculated by fitting a 
@@ -541,17 +541,23 @@ def ts_trendline(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]),
         lname=sepvar
     ps=list()
     df=df.dropna(axis=0,subset=[obsvar,modvar,'dtUTC'])
+    #creating trendlines without separating values
     if len(sepvals)==0:
         obs0=et._deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[obsvar]])
         mod0=et._deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[modvar]])
         time0=et._deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),['dtUTC']])
         yd0=et._deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),['YD']])
-        opar, opar_cov = opt.curve_fit(sin_model, yd0, obs0)
-        mpar, mpar_cov = opt.curve_fit(sin_model, yd0, mod0)
-        p0,=ax.plot(time0, sin_model(yd0, *opar), color=ocols[0], label=f'Observed {lname}',alpha=0.7, linestyle='dashed')
-        ps.append(p0)
-        p0,=ax.plot(time0, sin_model(yd0, *mpar), color=mcols[0], label=f'Modeled {lname}',alpha=0.7, linestyle='dashed')
-        ps.append(p0)
+        if error == False:
+            opar, opar_cov = opt.curve_fit(sin_model, yd0, obs0)
+            mpar, mpar_cov = opt.curve_fit(sin_model, yd0, mod0)
+            p0,=ax.plot(time0, sin_model(yd0, *opar), color=ocols[0], label=f'Observed {lname}',alpha=0.7, linestyle='dashed')
+            ps.append(p0)
+            p0,=ax.plot(time0, sin_model(yd0, *mpar), color=mcols[0], label=f'Modeled {lname}',alpha=0.7, linestyle='dashed')
+            ps.append(p0)
+        elif error == True:
+            epar, epar_cov = opt.curve_fit(sin_model, yd0, mod0-obs0)
+            p0,=ax.plot(time0, sin_model(yd0, *epar), color=ocols[0], label=f'Error {lname}',alpha=0.7, linestyle='dashed')
+            ps.append(p0)
     else:
         obs0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[obsvar]])
         mod0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[modvar]])
@@ -571,12 +577,17 @@ def ts_trendline(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]),
             if len(yd0[iii]) < 7:
                 print("The number of data points below min was less that the number of variables in the model. Therefore, data points below min have not been plotted ")
             else:
-                opar, opar_cov = opt.curve_fit(sin_model, yd0[iii], obs0[iii])
-                mpar, mpar_cov = opt.curve_fit(sin_model, yd0[iii], mod0[iii])
-                p0,=ax.plot(time0[iii], sin_model(yd0[iii], *opar), color=ocols[ii], label=f'Observed {ll}',alpha=0.7, linestyle='dashed')
-                ps.append(p0)
-                p0,=ax.plot(time0[iii], sin_model(yd0[iii], *mpar), color=mcols[ii], label=f'Modeled{ll}',alpha=0.7, linestyle='dashed')
-                ps.append(p0)
+                if error == False:
+                    opar, opar_cov = opt.curve_fit(sin_model, yd0[iii], obs0[iii])
+                    mpar, mpar_cov = opt.curve_fit(sin_model, yd0[iii], mod0[iii])
+                    p0,=ax.plot(time0[iii], sin_model(yd0[iii], *opar), color=ocols[ii], label=f'Observed {ll}',alpha=0.7, linestyle='dashed')
+                    ps.append(p0)
+                    p0,=ax.plot(time0[iii], sin_model(yd0[iii], *mpar), color=mcols[ii], label=f'Modeled{ll}',alpha=0.7, linestyle='dashed')
+                    ps.append(p0)
+                elif error == True:
+                    epar, epar_cov = opt.curve_fit(sin_model, yd0[iii], mod0[iii]-obs0[iii])
+                    p0,=ax.plot(time0[iii], sin_model(yd0[iii], *epar), color=ocols[ii], label=f'Error {lname}',alpha=0.7, linestyle='dashed')
+                    ps.append(p0)
         # between min and max:
         for ii in range(1,len(sepvals)):
             iii=np.logical_and(sep0<sepvals[ii],sep0>=sepvals[ii-1])
@@ -589,12 +600,17 @@ def ts_trendline(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]),
                 if len(yd0[iii]) < 7:
                     print("The number of data points inbetween min and max was less that the number of variables in the model. Therefore, data points inbetween min and max have not been plotted ")     
                 else:
-                    opar, opar_cov = opt.curve_fit(sin_model, yd0[iii], obs0[iii])
-                    mpar, mpar_cov = opt.curve_fit(sin_model, yd0[iii], mod0[iii])
-                    p0,=ax.plot(time0[iii], sin_model(yd0[iii], *opar), color=ocols[ii], label=f'Observed {ll}',alpha=0.7, linestyle='dashed')
-                    ps.append(p0)
-                    p0,=ax.plot(time0[iii], sin_model(yd0[iii], *mpar), color=mcols[ii], label=f'Modeled {ll}',alpha=0.7, linestyle='dashed')
-                    ps.append(p0)
+                    if error == False:
+                        opar, opar_cov = opt.curve_fit(sin_model, yd0[iii], obs0[iii])
+                        mpar, mpar_cov = opt.curve_fit(sin_model, yd0[iii], mod0[iii])
+                        p0,=ax.plot(time0[iii], sin_model(yd0[iii], *opar), color=ocols[ii], label=f'Observed {ll}',alpha=0.7, linestyle='dashed')
+                        ps.append(p0)
+                        p0,=ax.plot(time0[iii], sin_model(yd0[iii], *mpar), color=mcols[ii], label=f'Modeled {ll}',alpha=0.7, linestyle='dashed')
+                        ps.append(p0)
+                    elif error == True:
+                        epar, epar_cov = opt.curve_fit(sin_model, yd0[iii], mod0[iii]-obs0[iii])
+                        p0,=ax.plot(time0[iii], sin_model(yd0[iii], *epar), color=ocols[ii], label=f'Error {lname}',alpha=0.7, linestyle='dashed')
+                        ps.append(p0)
         # greater than max:
         iii=sep0>=sepvals[ii]
         if np.sum(iii)>0:
@@ -606,102 +622,17 @@ def ts_trendline(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]),
             if len(yd0[iii]) < 7:
                 print("The number of data points above max was less that the number of variables in the model. Therefore, data points above max have not been plotted ")
             else:
-                opar, opar_cov = opt.curve_fit(sin_model, yd0[iii], obs0[iii])
-                mpar, mpar_cov = opt.curve_fit(sin_model, yd0[iii], mod0[iii])
-                p0,=ax.plot(time0[iii], sin_model(yd0[iii], *opar), color=ocols[ii+1], label=f'Observed {ll}',alpha=0.7, linestyle='dashed')
-                ps.append(p0)
-                p0,=ax.plot(time0[iii], sin_model(yd0[iii], *mpar), color=mcols[ii+1], label=f'Modeled {ll}',alpha=0.7, linestyle='dashed')
-                ps.append(p0)
-    yearsFmt = mdates.DateFormatter('%d %b %y')
-    ax.xaxis.set_major_formatter(yearsFmt)
-    return ps
-
-def gsmooth(YD,val,L,res=1):
-# DD is input date in decimal days (ususally since 1900,1,1)
-# val is values to be smoothed
-# L is length scale of gaussian kernel- larger widens the window
-# res can be changed to give a different resolution of output
-    allt=np.arange(0,366+res,res)
-    fil=np.empty(np.size(allt)) #ohhh this is cool. It automatically creates an empty array of the size you need.
-    s=L/2.355
-    for ind,t in enumerate(allt):
-        diff=[min(abs(x-t),abs(x-t+365), abs(x-t-365)) for x in YD]
-        weight=[np.exp(-.5*x**2/s**2) if x <= 3*L else 0.0 for x in diff]
-        fil[ind]=np.sum(weight*val)/np.sum(weight)
-    return allt,fil
-
-def ts_gsmooth_line(ax,df,obsvar,modvar,start_date,end_date,L=50,region='',station='',sepvar='',sepvals=([]),lname='',sepunits='', ocols=('blue','darkviolet','teal','green','deepskyblue'),
-                          mcols=('fuchsia','firebrick','orange','darkgoldenrod','maroon'),labels=''):
-    """ Plots the daily average value of df[obsvar] and df[modvar] against df[YD]. 
-    """
-    if len(lname)==0:
-        lname=sepvar
-    ps=list()
-    df=df.dropna(axis=0,subset=['dtUTC',obsvar,modvar])
-    if len(region) > 0:
-        df=df[df['Basin'] == region]
-    if len(station) > 0:
-        df=df[df['Station'] == station]
-    if len(sepvals)==0:
-        obs0=et._deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[obsvar]])
-        mod0=et._deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[modvar]])
-        time0=et._deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),['YD']])
-        ox0,ox2=gsmooth(time0,obs0,L)
-        ps0,=ax.plot(ox0,ox2,'-',color=ocols[0], label=f'Observed {lname}',alpha=0.7, linestyle='dashed')
-        ps.append(ps0)
-        mx0,mx2=gsmooth(time0,mod0,L)
-        ps0,=ax.plot(mx0,mx2,'-',color=mcols[0], label=f'Modeled {lname}',alpha=0.7, linestyle='dashed')
-        ps.append(ps0)
-    else:
-        obs0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[obsvar]])
-        mod0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[modvar]])
-        time0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),['YD']])
-        sep0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[sepvar]])
-        sepvals=np.sort(sepvals)
-                # less than min case:
-        ii=0
-        iii=sep0<sepvals[ii]
-        if np.sum(iii)>0:
-            #ll=u'{} < {} {}'.format(lname,sepvals[ii],sepunits).strip()
-            if len(labels)>0:
-                ll=labels[0]
-            else:
-                ll=u'{} $<$ {} {}'.format(lname,sepvals[ii],sepunits).strip()
-            ox0,ox2=gsmooth(time0[iii],obs0[iii],L)
-            ps0,=ax.plot(ox0,ox2,'-',color=ocols[ii], label=f'Observed {ll}',alpha=0.7, linestyle='dashed')
-            ps.append(ps0)
-            mx0,mx2=gsmooth(time0[iii],mod0[iii],L)
-            ps0,=ax.plot(mx0,mx2,'-',color=mcols[ii], label=f'Modeled {ll}',alpha=0.7, linestyle='dashed')
-            ps.append(ps0)
-        # between min and max:
-        for ii in range(1,len(sepvals)):
-            iii=np.logical_and(sep0<sepvals[ii],sep0>=sepvals[ii-1])
-            if np.sum(iii)>0:
-                #ll=u'{} {} \u2264 {} < {} {}'.format(sepvals[ii-1],sepunits,lname,sepvals[ii],sepunits).strip()
-                if len(labels)>0:
-                    ll=labels[ii]
-                else:
-                    ll=u'{} {} $\leq$ {} $<$ {} {}'.format(sepvals[ii-1],sepunits,lname,sepvals[ii],sepunits).strip()
-                ox0,ox2=gsmooth(time0[iii],obs0[iii],L)
-                ps0,=ax.plot(ox0,ox2,'-',color=ocols[ii], label=f'Observed {ll}',alpha=0.7, linestyle='dashed')
-                ps.append(ps0)
-                mx0,mx2=gsmooth(time0[iii],mod0[iii],L)
-                ps0,=ax.plot(mx0,mx2,'-',color=mcols[ii], label=f'Modeled {ll}',alpha=0.7, linestyle='dashed')
-                ps.append(ps0)
-        # greater than max:
-        iii=sep0>=sepvals[ii]
-        if np.sum(iii)>0:
-            #ll=u'{} \u2265 {} {}'.format(lname,sepvals[ii],sepunits).strip()
-            if len(labels)>0:
-                ll=labels[ii+1]
-            else:
-                ll=u'{} $\geq$ {} {}'.format(lname,sepvals[ii],sepunits).strip()
-            ox0,ox2=gsmooth(time0[iii],obs0[iii],L)
-            ps0,=ax.plot(ox0,ox2,'-',color=ocols[ii+1], label=f'Observed {ll}',alpha=0.7, linestyle='dashed')
-            ps.append(ps0)
-            mx0,mx2=gsmooth(time0[iii],mod0[iii],L)
-            ps0,=ax.plot(mx0,mx2,'-',color=mcols[ii+1], label=f'Modeled {ll}',alpha=0.7, linestyle='dashed')
-            ps.append(ps0)
+                if error == False:
+                    opar, opar_cov = opt.curve_fit(sin_model, yd0[iii], obs0[iii])
+                    mpar, mpar_cov = opt.curve_fit(sin_model, yd0[iii], mod0[iii])
+                    p0,=ax.plot(time0[iii], sin_model(yd0[iii], *opar), color=ocols[ii+1], label=f'Observed {ll}',alpha=0.7, linestyle='dashed')
+                    ps.append(p0)
+                    p0,=ax.plot(time0[iii], sin_model(yd0[iii], *mpar), color=mcols[ii+1], label=f'Modeled {ll}',alpha=0.7, linestyle='dashed')
+                    ps.append(p0)
+                elif error == True:
+                    epar, epar_cov = opt.curve_fit(sin_model, yd0[iii], mod0[iii]-obs0[iii])
+                    p0,=ax.plot(time0[iii], sin_model(yd0[iii], *epar), color=ocols[ii+1], label=f'Error {lname}',alpha=0.7, linestyle='dashed')
+                    ps.append(p0)
     yearsFmt = mdates.DateFormatter('%d %b %y')
     ax.xaxis.set_major_formatter(yearsFmt)
     return ps
@@ -728,6 +659,7 @@ def TsByRegion(datreg,regions,obsvar,modvar,year,loc='lower left',units='($\mu$M
                 ts_trendline(axj,datreg[rj],obsvar,modvar,dt.datetime(year,1,1),dt.datetime(year,12,31))
     if (len(regions) % 2) != 0:
         fig.delaxes(ax[-1][-1])
+    return ax
         
 def err_corr_plot(ax,df,modvar,obsvar,envvar):
     df=df.dropna(axis=0,subset=[obsvar,modvar,envvar,'dtUTC'])
@@ -773,3 +705,4 @@ def get_grid_coor(lat,lon):
     jj = jjii.jj.sel(lats=lat, lons=lon, method=method).item()
     ii = jjii.ii.sel(lats=lat, lons=lon, method=method).item()
     print (ii, jj)
+    
