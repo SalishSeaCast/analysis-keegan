@@ -14,10 +14,6 @@ Descriptions under the links below are from the first cell of the notebooks
     
     A notebook which contains an evaluation of the SalishSeaCast model within PugetSound. More specifically, it compares Observed data on chlorophyll concentrations collected from bottle data and compares it to various model phytoplankon outputs. This evaluation includes scatter plots visualizing the similarity of observed and model data as well as tables of evaluation statistics.
 
-* ## [Density_Profiles.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Density_Profiles.ipynb)  
-    
-    I hope to fill up this notebook with a large set of density profiles which I will use to  determine better depths to choose from. 
-
 * ## [Ind_Stations_Timeseries_Base.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Ind_Stations_Timeseries_Base.ipynb)  
     
     A notebook which contains timeseries of SalishSeaCast model output and observed data within PugetSound. This script is designed so that model and observed data can be easily compared across multiple different stations. 

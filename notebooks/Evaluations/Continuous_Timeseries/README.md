@@ -6,14 +6,6 @@ The links below are to static renderings of the notebooks via
 Descriptions under the links below are from the first cell of the notebooks
 (if that cell contains Markdown or raw text).
 
-* ## [2015_Cont_Timeseries_hourly.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/2015_Cont_Timeseries_hourly.ipynb)  
-    
-    This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
-
-* ## [2015_Daily_Cont_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/2015_Daily_Cont_Timeseries.ipynb)  
-    
-    This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
-
 
 ##License
 
