@@ -11,18 +11,19 @@ import sys
 #salish options:
 ################
 maxproc=4
-saveloc='/data/eolson/MEOPAR/SS36runs/calcFiles/comparePhytoN/'
-Aloc='/data/eolson/MEOPAR/SS36runs/calcFiles/comparePhytoN/Area_240.nc'
-meshpath='/ocean/eolson/MEOPAR/NEMO-forcing/grid/mesh_mask201702_noLPE.nc'
-ptrcexpath='/results2/SalishSea/hindcast/05jul15/SalishSea_1h_20150705_20150705_ptrc_T.nc'
-plist=['Sentry Shoal','S3','Central node','Central SJDF']
-varNameDict={'Egmont':'Egmont','Halibut Bank':'HalibutBank','Sentry Shoal':'SentryShoal', 'S3':'S3', 'Central node':'CentralNode', 'Central SJDF':'CentralSJDF','all':'All'}
+saveloc='/ocean/kflanaga/MEOPAR/ptrc_extractions/'
+#Aloc='/data/eolson/MEOPAR/SS36runs/calcFiles/comparePhytoN/Area_240.nc'
+#meshpath='/ocean/eolson/MEOPAR/NEMO-forcing/grid/mesh_mask201702_noLPE.nc'
+#ptrcexpath='/results2/SalishSea/hindcast/05jul15/SalishSea_1h_20150705_20150705_ptrc_T.nc'
+plist=['Hoodsport','Twanoh','DabobBay','PointWells','CarrInlet','Hansville','Dockton','PointWilliams']
+varNameDict={'Hoodsport':'Hoodsport','Twanoh':'Twanoh','DabobBay':'DabobBay', 'PointWells':'PointWells',
+             'CarrInlet':'CarrInlet', 'Hansville':'Hansville', 'Dockton':'Dockton', 'PointWilliams':'PointWilliams'}
 t0=dt.datetime(2015,1,1)
 fdur=1 # length of each results file in days
 dirname='HC201905_2015'
-te=dt.datetime(2015,12,31)
+te=dt.datetime(2015,1,5)
 
-evars=('diatoms','ciliates','flagellates','nitrate','ammonium','silicon','microzooplankton')
+evars=('diatoms','ciliates','flagellates','nitrate')
 
 ###cedar options:
 #################
@@ -35,10 +36,14 @@ evars=('diatoms','ciliates','flagellates','nitrate','ammonium','silicon','microz
 ######################
 
 def setup():
-    spath='/results/SalishSea/hindcast.201905/'
+    spath='/results2/SalishSea/hindcast.201905/'
     ffmt='%Y%m%d'
     dfmt='%d%b%y'
     stencilp='{0}/SalishSea_1h_{1}_{1}_ptrc_T.nc'
+    # Ok, so this probably imputs the day month year as {0} and then the rest of the info goes into the next 
+    # part. This filling in probably happens with the help of the the format. 
+    # My only question now is why does it use carp? Should probably change to Grid. but why is grid filled up
+    # with stuff from carp t? must ask Elise. 
     stencile='{0}/SalishSea_1h_{1}_{1}_carp_T.nc'
     fnum=int(((te-t0).days+1)/fdur)#fnum=18 # number of results files per run
     runlen=fdur*fnum # length of run in days
@@ -46,7 +51,7 @@ def setup():
     iits=t0
     ind=0
     while iits<=te:
-        iite=iits+dt.timedelta(days=(fdur-1))
+        iite=iits+dt.timedelta(days=(fdur-1)) # why is it minus one?
         iitn=iits+dt.timedelta(days=fdur)
         try:
             iifstr=glob.glob(spath+stencilp.format(iits.strftime(dfmt).lower(),iits.strftime(ffmt),iite.strftime(ffmt)),recursive=True)[0]
@@ -60,7 +65,7 @@ def setup():
         except:
             print('file does not exist:  '+spath+stencile.format(iits.strftime(dfmt).lower(),iits.strftime(ffmt),iite.strftime(ffmt)))
             raise
-        fnames['tempBase'][ind]=saveloc+'temp/ptrc'+iits.strftime(ffmt)+'-'+iite.strftime(ffmt)
+        fnames['tempBase'][ind]=saveloc+'temp/ptrc'+iits.strftime(ffmt)+'_'+iite.strftime(ffmt)
         iits=iitn
         ind=ind+1
     return spath,fnum,runlen,fnames
@@ -88,7 +93,35 @@ def runExtractPtrc():
         print(pids[ipid].returncode)
         pids[ipid].stdout.close()
         pids[ipid].stderr.close()
+    print(pids)
     return pids
+
+def runExtractLocs():
+    # extract phyto at locs
+    for pl in plist:
+        pids=dict()
+        for ii in range(0,fnum):
+            f0=fnames['tempBase'][ii]+'.nc'
+            fpl=fnames['tempBase'][ii]+varNameDict[pl]+'.nc'
+            j,i=places.PLACES[pl]['NEMO grid ji']
+            pids[ii]=subprocess.Popen('ncks -v '+','.join(evars)+' -d x,'+str(i)+' -d y,'+str(j)+' '+f0+' '+fpl, shell=True,
+                                           stdout=subprocess.PIPE,  stderr=subprocess.PIPE)
+            if ii%maxproc==(maxproc-1):
+                pids[ii].wait() # wait for the last one in set
+        pids[ii].wait() # wait for the last one
+        # check that no others are still running, wait for them
+        for ipid in pids.keys():
+            while pids[ipid].poll() is None:
+                time.sleep(30)
+        for ipid in pids.keys():
+            for line in pids[ipid].stdout:
+                print(line)
+            pids[ipid].stdout.close()
+            pids[ipid].stderr.close()
+            print(pids[ipid].returncode)
+    return pids
+
+# Hmmmm. I think that Join locs ran effectively. However, it appears that extract locs did not so it never actually concatenated anything. 
 
 def runJoinLocs():
     pids=dict()
@@ -138,5 +171,7 @@ if __name__ == "__main__":
     print('done setup')
     pids = runExtractPtrc();
     print('done extract ptrc')
+    pids = runExtractLocs();
+    print('done extract')
     pids = runJoinLocs();
     print('done join')
