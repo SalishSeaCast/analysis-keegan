@@ -11,7 +11,7 @@ import sys
 #salish options:
 ################
 maxproc=4
-saveloc='/ocean/kflanaga/MEOPAR/ptrc_tests/'
+saveloc='/ocean/kflanaga/MEOPAR/grid_extractions/'
 #Aloc='/data/eolson/MEOPAR/SS36runs/calcFiles/comparePhytoN/Area_240.nc'
 #meshpath='/ocean/eolson/MEOPAR/NEMO-forcing/grid/mesh_mask201702_noLPE.nc'
 #ptrcexpath='/results2/SalishSea/hindcast/05jul15/SalishSea_1h_20150705_20150705_ptrc_T.nc'
@@ -21,9 +21,9 @@ varNameDict={'Hoodsport':'Hoodsport','Twanoh':'Twanoh','DabobBay':'DabobBay', 'P
 t0=dt.datetime(2015,1,1)
 fdur=1 # length of each results file in days
 dirname='HC201905_2015'
-te=dt.datetime(2015,1,3)
+te=dt.datetime(2015,12,31)
 
-evars=('diatoms','ciliates','flagellates','nitrate')
+evars=('votemper','vosaline')
 
 ###cedar options:
 #################
@@ -39,15 +39,14 @@ def setup():
     spath='/results2/SalishSea/hindcast.201905/'
     ffmt='%Y%m%d'
     dfmt='%d%b%y'
-    stencilp='{0}/SalishSea_1h_{1}_{1}_ptrc_T.nc'
+    stencilp='{0}/SalishSea_1h_{1}_{1}_grid_T.nc'
     # Ok, so this probably imputs the day month year as {0} and then the rest of the info goes into the next 
     # part. This filling in probably happens with the help of the the format. 
     # My only question now is why does it use carp? Should probably change to Grid. but why is grid filled up
     # with stuff from carp t? must ask Elise. 
-    stencile='{0}/SalishSea_1h_{1}_{1}_carp_T.nc'
     fnum=int(((te-t0).days+1)/fdur)#fnum=18 # number of results files per run
     runlen=fdur*fnum # length of run in days
-    fnames={'ptrc_T':dict(),'grid_T':dict(),'tempBase':dict()}
+    fnames={'grid_T':dict(),'tempBase':dict()}
     iits=t0
     ind=0
     while iits<=te:
@@ -55,27 +54,21 @@ def setup():
         iitn=iits+dt.timedelta(days=fdur)
         try:
             iifstr=glob.glob(spath+stencilp.format(iits.strftime(dfmt).lower(),iits.strftime(ffmt),iite.strftime(ffmt)),recursive=True)[0]
-            fnames['ptrc_T'][ind]=iifstr
-        except:
-            print('file does not exist:  '+spath+stencilp.format(iits.strftime(dfmt).lower(),iits.strftime(ffmt),iite.strftime(ffmt)))
-            raise
-        try:
-            iifstr=glob.glob(spath+stencile.format(iits.strftime(dfmt).lower(),iits.strftime(ffmt),iite.strftime(ffmt)),recursive=True)[0]
             fnames['grid_T'][ind]=iifstr
         except:
-            print('file does not exist:  '+spath+stencile.format(iits.strftime(dfmt).lower(),iits.strftime(ffmt),iite.strftime(ffmt)))
+            print('file does not exist: '+spath+stencilp.format(iits.strftime(dfmt).lower(),iits.strftime(ffmt),iite.strftime(ffmt)))
             raise
-        fnames['tempBase'][ind]=saveloc+'temp/ptrc'+iits.strftime(ffmt)+'_'+iite.strftime(ffmt)
+        fnames['tempBase'][ind]=saveloc+'temp/grid'+iits.strftime(ffmt)+'_'+iite.strftime(ffmt)
         iits=iitn
         ind=ind+1
     return spath,fnum,runlen,fnames
 
-def runExtractPtrc():
+def runExtractGrid():
     pids=dict()
     for ii in range(0,fnum):
-        # copy ptrc
-        f0=fnames['tempBase'][ii]+''+'.nc'
-        pids[ii]=subprocess.Popen('ncks -v '+','.join(evars)+' '+fnames['ptrc_T'][ii]+' '+f0, shell=True,
+        # copy grid
+        f0=fnames['tempBase'][ii]+'.nc'
+        pids[ii]=subprocess.Popen('ncks -v '+','.join(evars)+' '+fnames['grid_T'][ii]+' '+f0, shell=True,
                                            stdout=subprocess.PIPE,  stderr=subprocess.PIPE)
         if ii%maxproc==(maxproc-1):
             for jj in range(0,ii):
@@ -169,8 +162,8 @@ def runJoinLocs():
 if __name__ == "__main__":
     spath,fnum,runlen,fnames=setup();
     print('done setup')
-    pids = runExtractPtrc();
-    print('done extract ptrc')
+    pids = runExtractGrid();
+    print('done extract grid')
     pids = runExtractLocs();
     print('done extract')
     pids = runJoinLocs();
