@@ -15,13 +15,13 @@ saveloc='/ocean/kflanaga/MEOPAR/ptrc_tests/'
 #Aloc='/data/eolson/MEOPAR/SS36runs/calcFiles/comparePhytoN/Area_240.nc'
 #meshpath='/ocean/eolson/MEOPAR/NEMO-forcing/grid/mesh_mask201702_noLPE.nc'
 #ptrcexpath='/results2/SalishSea/hindcast/05jul15/SalishSea_1h_20150705_20150705_ptrc_T.nc'
-plist=['Hoodsport','Twanoh','DabobBay','PointWells','CarrInlet','Hansville','Dockton','PointWilliams']
+plist=['Hoodsport','Twanoh','DabobBay','PointWells','CarrInlet','Hansville']
 varNameDict={'Hoodsport':'Hoodsport','Twanoh':'Twanoh','DabobBay':'DabobBay', 'PointWells':'PointWells',
-             'CarrInlet':'CarrInlet', 'Hansville':'Hansville', 'Dockton':'Dockton', 'PointWilliams':'PointWilliams'}
+             'CarrInlet':'CarrInlet', 'Hansville':'Hansville'}
 t0=dt.datetime(2015,1,1)
 fdur=1 # length of each results file in days
 dirname='HC201905_2015'
-te=dt.datetime(2015,1,3)
+te=dt.datetime(2015,1,2)
 
 evars=('diatoms','ciliates','flagellates','nitrate')
 
