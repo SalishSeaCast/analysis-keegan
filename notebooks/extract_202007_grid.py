@@ -7,16 +7,13 @@ import glob
 import time
 import sys
 
-###!!!### Ok, so this basically breaks if the files it is trying to write already exist, and 
-# it also breaks if the directories it is trying to go to do not exist. 
-# Must use OS to destroy any files I do not want and create directories that do not exist. 
-# I swear to god if I need to create one more temp file I forgot about I will lose it. 
+###!!! Alright, what the hell is happening with this data? why does it skip 03,06, 09, and 012?
 
 #dirname='spring2015_lowMuNano'
 #salish options:
 ################
 maxproc=4
-saveloc='/ocean/kflanaga/MEOPAR/grid_extractions/'
+saveloc='/ocean/kflanaga/MEOPAR/202007_grid_data/'
 #Aloc='/data/eolson/MEOPAR/SS36runs/calcFiles/comparePhytoN/Area_240.nc'
 #meshpath='/ocean/eolson/MEOPAR/NEMO-forcing/grid/mesh_mask201702_noLPE.nc'
 #ptrcexpath='/results2/SalishSea/hindcast/05jul15/SalishSea_1h_20150705_20150705_ptrc_T.nc'
@@ -26,7 +23,7 @@ varNameDict={'Hoodsport':'Hoodsport','Twanoh':'Twanoh','DabobBay':'DabobBay', 'P
 t0=dt.datetime(2015,1,1)
 fdur=1 # length of each results file in days
 dirname='HC201905_2015'
-te=dt.datetime(2015,12,31)
+te=dt.datetime(2015,1,4)
 
 evars=('votemper','vosaline')
 
@@ -41,10 +38,10 @@ evars=('votemper','vosaline')
 ######################
 
 def setup():
-    spath='/results2/SalishSea/hindcast.201905/'
+    spath='/home/sallen/202007/202007C-p3/'
     ffmt='%Y%m%d'
     dfmt='%d%b%y'
-    stencilp='{0}/SalishSea_1d_{1}_{1}_grid_T.nc'
+    stencilp='SalishSea_1d_{1}_{1}_grid_T.nc'
     # Ok, so this probably imputs the day month year as {0} and then the rest of the info goes into the next 
     # part. This filling in probably happens with the help of the the format. 
     # My only question now is why does it use carp? Should probably change to Grid. but why is grid filled up
