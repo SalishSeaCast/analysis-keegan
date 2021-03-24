@@ -7,41 +7,32 @@ import glob
 import time
 import sys
 
-###!!! Alright, what the hell is happening with this data? why does it skip 03,06, 09, and 012?
+###!!! Alright, that is sorted know. 
+#The 2015 data goes from 0101 to 0630 and from 0701 to 1231
+# The 2016 data goes from 0101 to 1120 and from 1116 to 1231
 
 #dirname='spring2015_lowMuNano'
 #salish options:
 ################
+
 maxproc=4
-saveloc='/ocean/kflanaga/MEOPAR/202007_grid_data/'
-#Aloc='/data/eolson/MEOPAR/SS36runs/calcFiles/comparePhytoN/Area_240.nc'
-#meshpath='/ocean/eolson/MEOPAR/NEMO-forcing/grid/mesh_mask201702_noLPE.nc'
-#ptrcexpath='/results2/SalishSea/hindcast/05jul15/SalishSea_1h_20150705_20150705_ptrc_T.nc'
+saveloc='/ocean/kflanaga/MEOPAR/202007_grid_extr/'
 plist=['Hoodsport','Twanoh','DabobBay','PointWells','CarrInlet','Hansville']
 varNameDict={'Hoodsport':'Hoodsport','Twanoh':'Twanoh','DabobBay':'DabobBay', 'PointWells':'PointWells',
              'CarrInlet':'CarrInlet', 'Hansville':'Hansville'}
 t0=dt.datetime(2015,1,1)
 fdur=1 # length of each results file in days
 dirname='HC201905_2015'
-te=dt.datetime(2015,1,4)
-
+tm1=dt.datetime(2015,6,30)
+tm2=dt.datetime(2015,7,1)
+te=dt.datetime(2015,12,31)
+#### !!!! Set these to numbers close together to make this easier. 
 evars=('votemper','vosaline')
-
-###cedar options:
-#################
-#maxproc=6
-#saveloc='/scratch/eolson/results/calcs/'
-#Aloc='/scratch/eolson/results/calcs/Area_240.nc'
-##meshpath='/ocean/eolson/MEOPAR/NEMO-forcing/grid/mesh_mask201702_noLPE.nc'
-##ptrcexpath='/data/eolson/results/MEOPAR/SS36runs/CedarRuns/spring2015_KhT/SalishSea_1h_20150206_20150804_ptrc_T_20150616-20150625.nc'
-#spath='/scratch/eolson/results/'+dirname+'/'
-######################
 
 def setup():
     spath='/home/sallen/202007/202007C-p3/'
     ffmt='%Y%m%d'
-    dfmt='%d%b%y'
-    stencilp='SalishSea_1d_{1}_{1}_grid_T.nc'
+    stencilp='SalishSea_1d_{0}_{1}_grid_T_{2}-{2}.nc'
     # Ok, so this probably imputs the day month year as {0} and then the rest of the info goes into the next 
     # part. This filling in probably happens with the help of the the format. 
     # My only question now is why does it use carp? Should probably change to Grid. but why is grid filled up
@@ -51,19 +42,32 @@ def setup():
     fnames={'grid_T':dict(),'tempBase':dict()}
     iits=t0
     ind=0
+    while iits<=tm1:
+        iite=iits+dt.timedelta(days=(fdur-1)) 
+        iitn=iits+dt.timedelta(days=fdur)
+        try:
+            iifstr=glob.glob(spath+stencilp.format(t0.strftime(ffmt),tm1.strftime(ffmt),iits.strftime(ffmt),iite.strftime(ffmt)),recursive=True)[0]
+            fnames['grid_T'][ind]=iifstr
+        except:
+            print('file does not exist: '+spath+stencilp.format(iits.strftime(ffmt),iite.strftime(ffmt)))
+            raise
+        fnames['tempBase'][ind]=saveloc+'temp/grid'+iits.strftime(ffmt)+'_'+iite.strftime(ffmt)
+        iits=iitn
+        ind=ind+1
     while iits<=te:
         iite=iits+dt.timedelta(days=(fdur-1)) 
         iitn=iits+dt.timedelta(days=fdur)
         try:
-            iifstr=glob.glob(spath+stencilp.format(iits.strftime(dfmt).lower(),iits.strftime(ffmt),iite.strftime(ffmt)),recursive=True)[0]
+            iifstr=glob.glob(spath+stencilp.format(tm2.strftime(ffmt),te.strftime(ffmt),iits.strftime(ffmt),iite.strftime(ffmt)),recursive=True)[0]
             fnames['grid_T'][ind]=iifstr
         except:
-            print('file does not exist: '+spath+stencilp.format(iits.strftime(dfmt).lower(),iits.strftime(ffmt),iite.strftime(ffmt)))
+            print('file does not exist: '+spath+stencilp.format(iits.strftime(ffmt),iite.strftime(ffmt)))
             raise
         fnames['tempBase'][ind]=saveloc+'temp/grid'+iits.strftime(ffmt)+'_'+iite.strftime(ffmt)
         iits=iitn
         ind=ind+1
     return spath,fnum,runlen,fnames
+
 
 def runExtractGrid():
     pids=dict()
