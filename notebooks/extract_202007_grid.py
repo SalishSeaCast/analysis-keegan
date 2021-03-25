@@ -16,7 +16,7 @@ import sys
 ################
 
 maxproc=4
-saveloc='/ocean/kflanaga/MEOPAR/202007_grid_extr/'
+saveloc='/ocean/kflanaga/MEOPAR/202007_grid_data/'
 plist=['Hoodsport','Twanoh','DabobBay','PointWells','CarrInlet','Hansville']
 varNameDict={'Hoodsport':'Hoodsport','Twanoh':'Twanoh','DabobBay':'DabobBay', 'PointWells':'PointWells',
              'CarrInlet':'CarrInlet', 'Hansville':'Hansville'}

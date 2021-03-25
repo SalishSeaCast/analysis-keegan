@@ -23,10 +23,10 @@ saveloc='/ocean/kflanaga/MEOPAR/grid_extractions/'
 plist=['Hoodsport','Twanoh','DabobBay','PointWells','CarrInlet','Hansville']
 varNameDict={'Hoodsport':'Hoodsport','Twanoh':'Twanoh','DabobBay':'DabobBay', 'PointWells':'PointWells',
              'CarrInlet':'CarrInlet', 'Hansville':'Hansville'}
-t0=dt.datetime(2015,1,1)
+t0=dt.datetime(2016,1,1)
 fdur=1 # length of each results file in days
 dirname='HC201905_2015'
-te=dt.datetime(2015,12,31)
+te=dt.datetime(2016,12,31)
 
 evars=('votemper','vosaline')
 

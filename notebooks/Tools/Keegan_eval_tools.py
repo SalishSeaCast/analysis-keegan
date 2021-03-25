@@ -706,3 +706,40 @@ def get_grid_coor(lat,lon):
     ii = jjii.ii.sel(lats=lat, lons=lon, method=method).item()
     print (ii, jj)
     
+# I think I prefer the pcolourmesh style of plotting. 
+def hovmoeller(variable, depth, dates_list, depth_range, date_range, 
+               title='', var_title='', vmin=float('NaN'), vmax=float('NaN'), cmap='jet'):
+    depth_min, depth_max = depth_range
+    date_min, date_max = date_range
+    if np.isnan(vmin) == True:
+        vmin= variable.min()
+    if np.isnan(vmax) == True:
+        vmax= variable.max()
+    fig, ax = plt.subplots(1,1, figsize=(12,6))
+
+    # Plot temperature contours
+    #CB = ax.contourf(dates_list, depth, np.transpose(variable),
+    #                    vmin=var_min, vmax=var_max)
+    CB=ax.pcolormesh(dates_list, depth, variable, shading='auto',
+               vmin=vmin, vmax=vmax, cmap=cmap)
+
+    # Settings
+    ax.set_title(title)
+    ax.invert_yaxis()
+    ax.set_xlabel('Date')
+    ax.set_ylabel('Depth [m]')
+    ax.set_ylim(depth_max,depth_min)
+    ax.set_xlim(date_min,date_max)
+    yearsFmt = mdates.DateFormatter('%d %b')
+    ax.xaxis.set_major_formatter(yearsFmt)
+    plt.tight_layout()
+    plt.setp(ax.get_xticklabels(), rotation=30, horizontalalignment='right')
+    plt.locator_params(axis="x", nbins=20)
+    
+    # Colorbar:
+    cbar_ax = fig.add_axes([1, 0.35, 0.02, 0.52])
+    cbar    = fig.colorbar(CB, cax=cbar_ax, ticks=np.linspace(vmin,vmax,8))
+    cbar.set_label(var_title)
+    
+    return ax
+    
