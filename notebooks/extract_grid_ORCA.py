@@ -7,48 +7,26 @@ import glob
 import time
 import sys
 
-###!!!### Ok, so this basically breaks if the files it is trying to write already exist, and 
-# it also breaks if the directories it is trying to go to do not exist. 
-# Must use OS to destroy any files I do not want and create directories that do not exist. 
-# I swear to god if I need to create one more temp file I forgot about I will lose it. 
 
-#dirname='spring2015_lowMuNano'
-#salish options:
-################
 maxproc=4
 saveloc='/ocean/kflanaga/MEOPAR/grid_extractions/'
-#Aloc='/data/eolson/MEOPAR/SS36runs/calcFiles/comparePhytoN/Area_240.nc'
-#meshpath='/ocean/eolson/MEOPAR/NEMO-forcing/grid/mesh_mask201702_noLPE.nc'
-#ptrcexpath='/results2/SalishSea/hindcast/05jul15/SalishSea_1h_20150705_20150705_ptrc_T.nc'
+dirname='HC201905'
+year=2016
 plist=['Hoodsport','Twanoh','DabobBay','PointWells','CarrInlet','Hansville']
 varNameDict={'Hoodsport':'Hoodsport','Twanoh':'Twanoh','DabobBay':'DabobBay', 'PointWells':'PointWells',
              'CarrInlet':'CarrInlet', 'Hansville':'Hansville'}
-t0=dt.datetime(2016,1,1)
+t0=dt.datetime(year,1,1)
 fdur=1 # length of each results file in days
-dirname='HC201905_2015'
-te=dt.datetime(2016,12,31)
+te=dt.datetime(year,12,31)
 
 evars=('votemper','vosaline')
 
-###cedar options:
-#################
-#maxproc=6
-#saveloc='/scratch/eolson/results/calcs/'
-#Aloc='/scratch/eolson/results/calcs/Area_240.nc'
-##meshpath='/ocean/eolson/MEOPAR/NEMO-forcing/grid/mesh_mask201702_noLPE.nc'
-##ptrcexpath='/data/eolson/results/MEOPAR/SS36runs/CedarRuns/spring2015_KhT/SalishSea_1h_20150206_20150804_ptrc_T_20150616-20150625.nc'
-#spath='/scratch/eolson/results/'+dirname+'/'
-######################
 
 def setup():
     spath='/results2/SalishSea/hindcast.201905/'
     ffmt='%Y%m%d'
     dfmt='%d%b%y'
     stencilp='{0}/SalishSea_1d_{1}_{1}_grid_T.nc'
-    # Ok, so this probably imputs the day month year as {0} and then the rest of the info goes into the next 
-    # part. This filling in probably happens with the help of the the format. 
-    # My only question now is why does it use carp? Should probably change to Grid. but why is grid filled up
-    # with stuff from carp t? must ask Elise. 
     fnum=int(((te-t0).days+1)/fdur)#fnum=18 # number of results files per run
     runlen=fdur*fnum # length of run in days
     fnames={'grid_T':dict(),'tempBase':dict()}
@@ -122,14 +100,12 @@ def runExtractLocs():
             print(pids[ipid].returncode)
     return pids
 
-# Hmmmm. I think that Join locs ran effectively. However, it appears that extract locs did not so it never actually concatenated anything. 
-
 def runJoinLocs():
     pids=dict()
     jj=0
     for pl in plist:
         fpllist=list()
-        f1=saveloc+'ts_'+dirname+'_'+varNameDict[pl]+'.nc'
+        f1=saveloc+'ts_'+dirname+'_'+str(year)+'_'+varNameDict[pl]+'.nc'
         if os.path.exists(f1):
             os.remove(f1)
         for ii in range(0,fnum):
@@ -151,23 +127,6 @@ def runJoinLocs():
         pids[ipid].stdout.close()
         pids[ipid].stderr.close()
     return pids
-
-
-#pids= runExtractPtrc();
-#
-#pids= runAddE3t();
-#
-#pids= runAddA();
-#
-#pids= runExtractLocs();
-#
-#pids = runJoinLocs();
-#
-#pids = runMultAll();
-#
-#pids = runSumAll();
-#
-#pids = combAll();
 
 if __name__ == "__main__":
     spath,fnum,runlen,fnames=setup();

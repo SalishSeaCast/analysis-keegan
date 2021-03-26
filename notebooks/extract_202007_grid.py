@@ -10,33 +10,32 @@ import sys
 ###!!! Alright, that is sorted know. 
 #The 2015 data goes from 0101 to 0630 and from 0701 to 1231
 # The 2016 data goes from 0101 to 1120 and from 1116 to 1231
-
-#dirname='spring2015_lowMuNano'
-#salish options:
-################
+# Note that for the 2016 data you need to make an alteration to the first glob. 
 
 maxproc=4
+spath='/home/sallen/202007/202007C-p3/'
 saveloc='/ocean/kflanaga/MEOPAR/202007_grid_data/'
+dirname='HC202007'
+year=2016
+
+#Defining the locations 
 plist=['Hoodsport','Twanoh','DabobBay','PointWells','CarrInlet','Hansville']
 varNameDict={'Hoodsport':'Hoodsport','Twanoh':'Twanoh','DabobBay':'DabobBay', 'PointWells':'PointWells',
              'CarrInlet':'CarrInlet', 'Hansville':'Hansville'}
-t0=dt.datetime(2015,1,1)
+
+#defining the timespan and time resoltuon
+t0=dt.datetime(year,1,1)
+tm1=dt.datetime(year,11,15)
+tm2=dt.datetime(year,11,16)
+te=dt.datetime(year,12,31)
 fdur=1 # length of each results file in days
-dirname='HC201905_2015'
-tm1=dt.datetime(2015,6,30)
-tm2=dt.datetime(2015,7,1)
-te=dt.datetime(2015,12,31)
-#### !!!! Set these to numbers close together to make this easier. 
+
+#defining the model variables to extract from ptrc
 evars=('votemper','vosaline')
 
 def setup():
-    spath='/home/sallen/202007/202007C-p3/'
     ffmt='%Y%m%d'
     stencilp='SalishSea_1d_{0}_{1}_grid_T_{2}-{2}.nc'
-    # Ok, so this probably imputs the day month year as {0} and then the rest of the info goes into the next 
-    # part. This filling in probably happens with the help of the the format. 
-    # My only question now is why does it use carp? Should probably change to Grid. but why is grid filled up
-    # with stuff from carp t? must ask Elise. 
     fnum=int(((te-t0).days+1)/fdur)#fnum=18 # number of results files per run
     runlen=fdur*fnum # length of run in days
     fnames={'grid_T':dict(),'tempBase':dict()}
@@ -46,7 +45,7 @@ def setup():
         iite=iits+dt.timedelta(days=(fdur-1)) 
         iitn=iits+dt.timedelta(days=fdur)
         try:
-            iifstr=glob.glob(spath+stencilp.format(t0.strftime(ffmt),tm1.strftime(ffmt),iits.strftime(ffmt),iite.strftime(ffmt)),recursive=True)[0]
+            iifstr=glob.glob(spath+stencilp.format(t0.strftime(ffmt),te.strftime(ffmt),iits.strftime(ffmt),iite.strftime(ffmt)),recursive=True)[0]
             fnames['grid_T'][ind]=iifstr
         except:
             print('file does not exist: '+spath+stencilp.format(iits.strftime(ffmt),iite.strftime(ffmt)))
@@ -130,7 +129,7 @@ def runJoinLocs():
     jj=0
     for pl in plist:
         fpllist=list()
-        f1=saveloc+'ts_'+dirname+'_'+varNameDict[pl]+'.nc'
+        f1=saveloc+'ts_'+dirname+'_'+str(year)+'_'+varNameDict[pl]+'.nc'
         if os.path.exists(f1):
             os.remove(f1)
         for ii in range(0,fnum):
