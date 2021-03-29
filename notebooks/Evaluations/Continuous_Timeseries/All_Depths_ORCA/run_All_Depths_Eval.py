@@ -3,31 +3,33 @@ import re
 import os
 
 # PSF eval:
-modver='201905_Hindcast'
+saveloc='202007_Hindcast' 
 paramlistPSF=list()
-year_range=range(2011,2019)
+year_range=range(2015,2017)
 mooring_list=('CarrInlet','Hoodsport','PointWells','Twanoh')
-ptrcloc='/ocean/kflanaga/MEOPAR/ptrc_extractions'
-gridloc='/ocean/kflanaga/MEOPAR/grid_extractions'
+modver='HC202007' #HC202007 is the other option.
+ptrcloc='/ocean/kflanaga/MEOPAR/202007_ptrc_data'
+gridloc='/ocean/kflanaga/MEOPAR/202007_grid_data'
 ORCAloc='/ocean/kflanaga/MEOPAR/ORCAData'
 for m in mooring_list:
     mooring=m
     for y in year_range:
         year=y
         paramlistPSF.append(dict(year=year,
+                                modver=modver,
                                 mooring=mooring,
-                                ptrcloc=ptrcloc
-                                gridloc=gridloc
+                                ptrcloc=ptrcloc,
+                                gridloc=gridloc,
                                 ORCAloc=ORCAloc))
 
 for idict in paramlistPSF:
-    newfname=f'{idict["mooring"]}/{modver}/{idict["year"]}_{idict["mooring"]}_Evaluation.ipynb'
+    newfname=f'{idict["mooring"]}/{saveloc}/{idict["year"]}_{idict["mooring"]}_Evaluations.ipynb'
     print(newfname)
     if os.path.isfile(newfname):
         os.remove(newfname)
     try:
         pm.execute_notebook(
-           'WADE_Base_Puget_Evaluation.ipynb',
+           'Base_All_Depths.ipynb',
            newfname,
            parameters=idict
             );
