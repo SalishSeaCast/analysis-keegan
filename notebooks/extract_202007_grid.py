@@ -16,7 +16,7 @@ maxproc=4
 spath='/home/sallen/202007/202007C-p3/'
 saveloc='/ocean/kflanaga/MEOPAR/202007_grid_data/'
 dirname='HC202007'
-year=2016
+year=2015
 
 #Defining the locations 
 plist=['Hoodsport','Twanoh','DabobBay','PointWells','CarrInlet','Hansville']
@@ -25,8 +25,8 @@ varNameDict={'Hoodsport':'Hoodsport','Twanoh':'Twanoh','DabobBay':'DabobBay', 'P
 
 #defining the timespan and time resoltuon
 t0=dt.datetime(year,1,1)
-tm1=dt.datetime(year,11,15)
-tm2=dt.datetime(year,11,16)
+tm1=dt.datetime(year,6,30)
+tm2=dt.datetime(year,7,1)
 te=dt.datetime(year,12,31)
 fdur=1 # length of each results file in days
 
@@ -45,7 +45,7 @@ def setup():
         iite=iits+dt.timedelta(days=(fdur-1)) 
         iitn=iits+dt.timedelta(days=fdur)
         try:
-            iifstr=glob.glob(spath+stencilp.format(t0.strftime(ffmt),te.strftime(ffmt),iits.strftime(ffmt),iite.strftime(ffmt)),recursive=True)[0]
+            iifstr=glob.glob(spath+stencilp.format(t0.strftime(ffmt),tm1.strftime(ffmt),iits.strftime(ffmt),iite.strftime(ffmt)),recursive=True)[0]
             fnames['grid_T'][ind]=iifstr
         except:
             print('file does not exist: '+spath+stencilp.format(iits.strftime(ffmt),iite.strftime(ffmt)))
