@@ -335,7 +335,7 @@ def multi_station_graph(df,datstat,obsvar,modvar,regions,lims,figsize=(14,40),un
     :arg obsvar,modvar: The name of the observed and model variables you wish to compare to each other.
     :type :string
     
-    :are regions: The names of all of the basins you wish to look at 
+    :arg regions: The names of all of the basins you wish to look at 
     :type : list of strings
     
     :arg lims: A pair of values that will decide the range of the graph. Should always
@@ -641,7 +641,7 @@ def TsByRegion(datreg,regions,obsvar,modvar,year,loc='lower left',units='($\mu$M
     fig,ax=plt.subplots(math.ceil(len(regions)/2),2,figsize=(13,13))
     new_reg = [regions[i:i+2] for i in range(0, len(regions), 2)]
     for ri,axi in zip(new_reg,ax):
-        for rj,axj in zip(ri,axi):
+        for rj,axj in zip(ri,axi):           
             ps=tsertser_graph(axj,datreg[rj],obsvar,modvar,dt.datetime(year,1,1),dt.datetime(year,12,31))
             axj.legend(handles=ps,prop={'size': 10},loc=loc)
             axj.set_xlabel(f'Date',fontsize=13)
