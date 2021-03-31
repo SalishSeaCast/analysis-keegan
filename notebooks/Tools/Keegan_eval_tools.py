@@ -637,6 +637,67 @@ def ts_trendline(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]),
     ax.xaxis.set_major_formatter(yearsFmt)
     return ps
 
+def TsByRegDep(datreg,regions,obsvar,modvar,year,regdepths,loc='lower left',units='($\mu$M)',trendline=False):
+    '''Creates time series for each region specified by the user. 
+    
+    :arg datreg: a dictionary which contains data for each seperate region. 
+    :type : dictionary
+    
+    :arg regions: A list of regions which need to be graphed. 
+    :type : list of strings
+    
+    :arg obsvar,modvar: The name of the observed and model variables you wish 
+                        to compare to each other.
+    :type :string
+    
+    :arg regdepths: A dictionary which contains a tuple of depths for each region.
+                    The data less than the first value of the tuple and the data
+                    greater than the second value of the tuple will be plotted.
+    :type : dictionary
+    
+    :arg loc: This argument is fed directly into the call for the figure legend. 
+              It controls the location of the legen
+    :type : string
+    
+    :units : A string which controls the units used for the automatically generated
+             X and Y axis labels. 
+    :type : string
+    
+    :trendline : If set to True then the function ts_trendline fits a sinusoidal equation
+                 to the data in order to plot a trendline through the points.
+    :type : boolean
+    '''
+    fig,ax=plt.subplots(math.ceil(len(regions)),2,figsize=(13,26))
+    for ri,axi in zip(regions,ax): 
+        dfless=datreg[ri][datreg[ri].Z < regdepths[ri][0]]
+        dfgreat=datreg[ri][datreg[ri].Z > regdepths[ri][1]]
+        ps0=tsertser_graph(axi[0],dfless,obsvar,modvar,dt.datetime(year,1,1),
+                           dt.datetime(year,12,31))
+        ps1=tsertser_graph(axi[1],dfgreat,obsvar,modvar,dt.datetime(year,1,1),
+                           dt.datetime(year,12,31))
+        axi[0].set_title(f'Time series for {ri} less than {regdepths[ri][0]} meters', fontsize=13)
+        axi[1].set_title(f'Time series for {ri} greater than {regdepths[ri][1]} meters', fontsize=13)
+        axi[0].legend(handles=ps0,prop={'size': 10},loc=loc)
+        axi[1].legend(handles=ps1,prop={'size': 10},loc=loc)
+        for axj in axi:
+            axj.set_xlabel(f'Date',fontsize=13)
+            axj.set_ylabel(f'{obsvar} {units}',fontsize=13)
+            yearsFmt = mdates.DateFormatter('%d %b')
+            axj.xaxis.set_major_formatter(yearsFmt)
+            for tick in axj.xaxis.get_major_ticks():
+                tick.label.set_fontsize(13)
+            for tick in axj.yaxis.get_major_ticks():
+                tick.label.set_fontsize(13)
+            plt.tight_layout()
+            plt.setp(axj.get_xticklabels(), rotation=30, horizontalalignment='right')
+        if trendline == True:
+            ts_trendline(axi[0],dfless,obsvar,modvar,dt.datetime(year,1,1),
+                         dt.datetime(year,12,31))
+            ts_trendline(axi[1],dfgreat,obsvar,modvar,dt.datetime(year,1,1),
+                         dt.datetime(year,12,31))
+    return ax
+        
+
 def TsByRegion(datreg,regions,obsvar,modvar,year,loc='lower left',units='($\mu$M)',trendline=False):
     fig,ax=plt.subplots(math.ceil(len(regions)/2),2,figsize=(13,13))
     new_reg = [regions[i:i+2] for i in range(0, len(regions), 2)]
