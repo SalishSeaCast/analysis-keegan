@@ -547,17 +547,22 @@ def ts_trendline(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]),
         mod0=et._deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[modvar]])
         time0=et._deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),['dtUTC']])
         yd0=et._deframe(df.loc[(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),['YD']])
-        if error == False:
-            opar, opar_cov = opt.curve_fit(sin_model, yd0, obs0)
-            mpar, mpar_cov = opt.curve_fit(sin_model, yd0, mod0)
-            p0,=ax.plot(time0, sin_model(yd0, *opar), color=ocols[0], label=f'Observed {lname}',alpha=0.7, linestyle='dashed')
-            ps.append(p0)
-            p0,=ax.plot(time0, sin_model(yd0, *mpar), color=mcols[0], label=f'Modeled {lname}',alpha=0.7, linestyle='dashed')
-            ps.append(p0)
-        elif error == True:
-            epar, epar_cov = opt.curve_fit(sin_model, yd0, mod0-obs0)
-            p0,=ax.plot(time0, sin_model(yd0, *epar), color=ocols[0], label=f'Error {lname}',alpha=0.7, linestyle='dashed')
-            ps.append(p0)
+        if len(yd0) < 7:
+            print('The number of data points is less than the number of variables in the model. no trendline will be plotted')
+        # creating seperate trendlines for the observed and model variables
+        else:
+            if error == False:
+                opar, opar_cov = opt.curve_fit(sin_model, yd0, obs0)
+                mpar, mpar_cov = opt.curve_fit(sin_model, yd0, mod0)
+                p0,=ax.plot(time0, sin_model(yd0, *opar), color=ocols[0], label=f'Observed {lname}',alpha=0.7, linestyle='dashed')
+                ps.append(p0)
+                p0,=ax.plot(time0, sin_model(yd0, *mpar), color=mcols[0], label=f'Modeled {lname}',alpha=0.7, linestyle='dashed')
+                ps.append(p0)
+            # creating a trendline of the error in the
+            elif error == True:
+                epar, epar_cov = opt.curve_fit(sin_model, yd0, mod0-obs0)
+                p0,=ax.plot(time0, sin_model(yd0, *epar), color=ocols[0], label=f'Error {lname}',alpha=0.7, linestyle='dashed')
+                ps.append(p0)
     else:
         obs0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[obsvar]])
         mod0=et._deframe(df.loc[(df[obsvar]==df[obsvar])&(df[modvar]==df[modvar])&(df[sepvar]==df[sepvar])&(df['dtUTC'] >= start_date)&(df['dtUTC']<= end_date),[modvar]])

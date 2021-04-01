@@ -6,7 +6,7 @@ import os
 saveloc='202007_Hindcast' 
 paramlistPSF=list()
 year_range=range(2015,2017)
-mooring_list=('CarrInlet','Hoodsport','PointWells','Twanoh')
+mooring_list=('CarrInlet','Hoodsport','PointWells','Twanoh','Hansville')
 modver='HC202007' #HC202007 is the other option.
 ptrcloc='/ocean/kflanaga/MEOPAR/202007_ptrc_data'
 gridloc='/ocean/kflanaga/MEOPAR/202007_grid_data'
