@@ -8,7 +8,7 @@ import time
 import sys
 
 maxproc=4
-saveloc='/ocean/kflanaga/MEOPAR/201905_ptrc_data/'
+saveloc='/ocean/kflanaga/MEOPAR/savedData/201905_ptrc_data/'
 dirname='HC201905'
 year=2016
 

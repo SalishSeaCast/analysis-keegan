@@ -15,7 +15,7 @@ import sys
 
 maxproc=4
 spath='/home/sallen/202007/202007C-p3/'
-saveloc='/ocean/kflanaga/MEOPAR/202007_ptrc_data/'
+saveloc='/ocean/kflanaga/MEOPAR/savedData/202007_ptrc_data/'
 dirname='HC202007'
 year=2016
 

@@ -10,13 +10,13 @@ for y in year_range:
     year=y+1
     modver='nowcast-green.201905'
     PATH= '/results2/SalishSea/nowcast-green.201905/'
-    saveloc='/ocean/kflanaga/MEOPAR/savedData'
+    datadir='/ocean/kflanaga/MEOPAR/savedData/WADE_CTD_pickles'
 
     paramlistPSF.append(dict(years=years,
                             year=year,
                             modver=modver,
                             PATH=PATH,
-                            saveloc=saveloc))
+                            datadir=datadir))
 
 for idict in paramlistPSF:
     newfname=f'CTD_Individual_year_evaluations/{idict["year"]}_Puget_CTD_Evaluation.ipynb'
