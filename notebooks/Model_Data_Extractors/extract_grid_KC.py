@@ -9,15 +9,15 @@ import sys
 
 
 maxproc=4
-saveloc='/ocean/kflanaga/MEOPAR/test/'
+saveloc='/ocean/kflanaga/MEOPAR/201905_grid_data/'
 dirname='HC201905'
-year=2018
+year=2014
 plist=['PointWilliams']
 varNameDict={'PointWilliams':'PointWilliams'}
 deptht=0
 t0=dt.datetime(year,1,1)
 fdur=1 # length of each results file in days
-te=dt.datetime(year,1,3)
+te=dt.datetime(year,12,31)
 
 evars=('votemper','vosaline')
 
@@ -84,7 +84,7 @@ def runExtractLocs():
             if os.path.exists(fpl):
                 os.remove(fpl)
                 #Why wont this work?
-            pids[ii]=subprocess.Popen('ncks -v '+','.join(evars)+' -d x,'+str(i)+' -d y,'+str(j)+'-d deptht,'+str(deptht)+' '+f0+' '+fpl, shell=True,
+            pids[ii]=subprocess.Popen('ncks -v '+','.join(evars)+' -d x,'+str(i)+' -d y,'+str(j)+' -d deptht,'+str(deptht)+' '+f0+' '+fpl, shell=True,
                                            stdout=subprocess.PIPE,  stderr=subprocess.PIPE)
             if ii%maxproc==(maxproc-1):
                 pids[ii].wait() # wait for the last one in set
