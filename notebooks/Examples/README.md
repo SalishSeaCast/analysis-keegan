@@ -14,6 +14,8 @@ Descriptions under the links below are from the first cell of the notebooks
     
 * ## [WADE_AlignedNutsAndChl_2018-2019_withFullChlPheoAndTimeExample.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Examples/WADE_AlignedNutsAndChl_2018-2019_withFullChlPheoAndTimeExample.ipynb)  
     
+* ## [compHPLCModelFirstLook-Regress-201812_NewALLO.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Examples/compHPLCModelFirstLook-Regress-201812_NewALLO.ipynb)  
+    
 * ## [plotModelOutputExamples.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Examples/plotModelOutputExamples.ipynb)  
     
 * ## [plottingExample.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Examples/plottingExample.ipynb)  

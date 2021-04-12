@@ -6,31 +6,31 @@ The links below are to static renderings of the notebooks via
 Descriptions under the links below are from the first cell of the notebooks
 (if that cell contains Markdown or raw text).
 
-* ## [2014_PointWilliams_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/Daily Timeseries/PointWilliams/2014_PointWilliams_Timeseries.ipynb)  
+* ## [2014_PointWilliams_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/PointWilliams/2014_PointWilliams_Timeseries.ipynb)  
     
     This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
 
-* ## [2015_PointWilliams_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/Daily Timeseries/PointWilliams/2015_PointWilliams_Timeseries.ipynb)  
+* ## [2015_PointWilliams_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/PointWilliams/2015_PointWilliams_Timeseries.ipynb)  
     
     This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
 
-* ## [2016_PointWilliams_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/Daily Timeseries/PointWilliams/2016_PointWilliams_Timeseries.ipynb)  
+* ## [2016_PointWilliams_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/PointWilliams/2016_PointWilliams_Timeseries.ipynb)  
     
     This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
 
-* ## [2017_PointWilliams_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/Daily Timeseries/PointWilliams/2017_PointWilliams_Timeseries.ipynb)  
+* ## [2017_PointWilliams_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/PointWilliams/2017_PointWilliams_Timeseries.ipynb)  
     
     This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
 
-* ## [2018_PointWilliams_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/Daily Timeseries/PointWilliams/2018_PointWilliams_Timeseries.ipynb)  
+* ## [2018_PointWilliams_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/PointWilliams/2018_PointWilliams_Timeseries.ipynb)  
     
     This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
 
-* ## [2019_PointWilliams_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/Daily Timeseries/PointWilliams/2019_PointWilliams_Timeseries.ipynb)  
+* ## [2019_PointWilliams_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/PointWilliams/2019_PointWilliams_Timeseries.ipynb)  
     
     This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
 
-* ## [Untitled.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/Daily Timeseries/PointWilliams/Untitled.ipynb)  
+* ## [Untitled.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/PointWilliams/Untitled.ipynb)  
     
 
 ##License

@@ -6,43 +6,43 @@ The links below are to static renderings of the notebooks via
 Descriptions under the links below are from the first cell of the notebooks
 (if that cell contains Markdown or raw text).
 
-* ## [2010_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/Daily Timeseries/Dockton/2010_Dockton_Timeseries.ipynb)  
+* ## [2010_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/Dockton/2010_Dockton_Timeseries.ipynb)  
     
     This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
 
-* ## [2011_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/Daily Timeseries/Dockton/2011_Dockton_Timeseries.ipynb)  
+* ## [2011_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/Dockton/2011_Dockton_Timeseries.ipynb)  
     
     This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
 
-* ## [2012_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/Daily Timeseries/Dockton/2012_Dockton_Timeseries.ipynb)  
+* ## [2012_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/Dockton/2012_Dockton_Timeseries.ipynb)  
     
     This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
 
-* ## [2013_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/Daily Timeseries/Dockton/2013_Dockton_Timeseries.ipynb)  
+* ## [2013_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/Dockton/2013_Dockton_Timeseries.ipynb)  
     
     This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
 
-* ## [2014_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/Daily Timeseries/Dockton/2014_Dockton_Timeseries.ipynb)  
+* ## [2014_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/Dockton/2014_Dockton_Timeseries.ipynb)  
     
     This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
 
-* ## [2015_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/Daily Timeseries/Dockton/2015_Dockton_Timeseries.ipynb)  
+* ## [2015_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/Dockton/2015_Dockton_Timeseries.ipynb)  
     
     This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
 
-* ## [2016_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/Daily Timeseries/Dockton/2016_Dockton_Timeseries.ipynb)  
+* ## [2016_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/Dockton/2016_Dockton_Timeseries.ipynb)  
     
     This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
 
-* ## [2017_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/Daily Timeseries/Dockton/2017_Dockton_Timeseries.ipynb)  
+* ## [2017_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/Dockton/2017_Dockton_Timeseries.ipynb)  
     
     This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
 
-* ## [2018_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/Daily Timeseries/Dockton/2018_Dockton_Timeseries.ipynb)  
+* ## [2018_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/Dockton/2018_Dockton_Timeseries.ipynb)  
     
     This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
 
-* ## [2019_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/Daily Timeseries/Dockton/2019_Dockton_Timeseries.ipynb)  
+* ## [2019_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/Dockton/2019_Dockton_Timeseries.ipynb)  
     
     This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
 

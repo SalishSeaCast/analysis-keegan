@@ -6,10 +6,6 @@ The links below are to static renderings of the notebooks via
 Descriptions under the links below are from the first cell of the notebooks
 (if that cell contains Markdown or raw text).
 
-* ## [Density_Profiles.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Density Profiles/Density_Profiles.ipynb)  
-    
-    I This notebook contains a variety of density profiles that will inform the choice of different depths to look at when evaluating different regions. 
-
 
 ##License
 

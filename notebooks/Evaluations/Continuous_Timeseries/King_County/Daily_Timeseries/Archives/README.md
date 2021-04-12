@@ -6,15 +6,11 @@ The links below are to static renderings of the notebooks via
 Descriptions under the links below are from the first cell of the notebooks
 (if that cell contains Markdown or raw text).
 
-* ## [2014_Cont_Timeseries_hourly.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Hourly_Timeseries/2014_Cont_Timeseries_hourly.ipynb)  
+* ## [Dockton_Base_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/Archives/Dockton_Base_Timeseries.ipynb)  
     
     This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
 
-* ## [2018_Cont_Timeseries_hourly.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Hourly_Timeseries/2018_Cont_Timeseries_hourly.ipynb)  
-    
-    This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
-
-* ## [Base_Cont_Timeseries_hourly.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Hourly_Timeseries/Base_Cont_Timeseries_hourly.ipynb)  
+* ## [PointWilliams_Base_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/Archives/PointWilliams_Base_Timeseries.ipynb)  
     
     This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
 

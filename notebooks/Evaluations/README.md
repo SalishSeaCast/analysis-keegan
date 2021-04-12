@@ -20,7 +20,7 @@ Descriptions under the links below are from the first cell of the notebooks
 
 * ## [Timeseries_Base_Puget_Evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Timeseries_Base_Puget_Evaluation.ipynb)  
     
-    A notebook which contains timeseries of SalishSeaCast model output and observed data within PugetSound. This script is designed so that changes the the observed and model data over time can be easily compared.
+    A notebook which contains time series of SalishSeaCast model output and observed data within PugetSound. This script is designed so that changes in the observed and model data over time can be easily compared.
 
 * ## [WADE_Base_Puget_Evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/WADE_Base_Puget_Evaluation.ipynb)  
     
