@@ -3,13 +3,13 @@ import re
 import os
 
 # PSF eval:
-saveloc='202007_Hindcast' 
+saveloc='201905_Hindcast' 
 paramlistPSF=list()
-year_range=range(2015,2017)
-mooring_list=('CarrInlet','Hoodsport','PointWells','Twanoh','Hansville')
-modver='HC202007' #HC202007 is the other option.
-ptrcloc='/ocean/kflanaga/MEOPAR/savedData/202007_ptrc_data'
-gridloc='/ocean/kflanaga/MEOPAR/savedData/202007_grid_data'
+year_range=range(2013,2020)
+mooring_list=('CarrInlet','Hoodsport','PointWells','Twanoh','Hansville','DabobBay')
+modver='HC201905' #HC202007 is the other option.
+ptrcloc='/ocean/kflanaga/MEOPAR/savedData/201905_ptrc_data'
+gridloc='/ocean/kflanaga/MEOPAR/savedData/201905_grid_data'
 ORCAloc='/ocean/kflanaga/MEOPAR/savedData/ORCAData'
 for m in mooring_list:
     mooring=m

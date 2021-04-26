@@ -10,7 +10,7 @@ import sys
 maxproc=4
 saveloc='/ocean/kflanaga/MEOPAR/savedData/201905_ptrc_data/'
 dirname='HC201905'
-year=2016
+year=2013
 
 #Defining the locations 
 plist=['Hoodsport','Twanoh','DabobBay','PointWells','CarrInlet','Hansville']

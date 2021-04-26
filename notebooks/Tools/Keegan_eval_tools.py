@@ -224,12 +224,15 @@ def bySeason(ax,seasons,obsvar,modvar,lims,season_titles=['Dec-Feb','Mar-May','J
     ax[3].set_title(season_titles[3])
     return 
 
-def hist2d(ax,fig,df,obsvar,modvar,lims,fontsize=12):
+def hist2d(ax,fig,df,obsvar,modvar,lims,fontsize=12,cbticks=[]):
     ax.plot(lims,lims,'k-',alpha=.2)
     ii=(~np.isnan(df[obsvar]))&(~np.isnan(df[modvar]))
     counts, xedges, yedges, ps=ax.hist2d(df.loc[ii,[obsvar]].values.flatten(),
                                       df.loc[ii,[modvar]].values.flatten(),bins=25*3,norm=LogNorm())
-    cb=fig.colorbar(ps,ax=ax,label='Count',shrink=0.5)
+    cb=fig.colorbar(ps,ax=ax,shrink=0.5)
+    if len(cbticks) != 0:
+        cb.set_ticks(cbticks)
+    cb.set_label(label='Count',size=fontsize)
     ax.set_xlim(lims)
     ax.set_ylim(lims)
     ax.set_ylabel('Modeled',fontsize=fontsize)
@@ -246,18 +249,18 @@ def bySeason_hist2d(ax,fig,seasons,obsvar,modvar,lims,season_titles=['Dec-Feb','
             axi.set_aspect(1)
             axi.set_xlabel('Obs')
             axi.set_ylabel('Model')
-    jp=hist2d(ax[0][0],fig,seasons[0],obsvar,modvar,lims)
+    jp=hist2d(ax[0][0],fig,seasons[0],obsvar,modvar,lims,fontsize=18)
     ax[0][0].set_title(season_titles[0])
-    jp=hist2d(ax[0][1],fig,seasons[1],obsvar,modvar,lims)
+    jp=hist2d(ax[0][1],fig,seasons[1],obsvar,modvar,lims,fontsize=18)
     ax[0][1].set_title(season_titles[1])
-    jp=hist2d(ax[1][0],fig,seasons[2],obsvar,modvar,lims)
+    jp=hist2d(ax[1][0],fig,seasons[2],obsvar,modvar,lims,fontsize=18)
     ax[1][0].set_title(season_titles[2])
-    jp=hist2d(ax[1][1],fig,seasons[3],obsvar,modvar,lims)
+    jp=hist2d(ax[1][1],fig,seasons[3],obsvar,modvar,lims,fontsize=18)
     ax[1][1].set_title(season_titles[3])
     return 
 
-def byRegion_hist2d(datreg,regions,obsvar,modvar,lims):
-    fig,ax=plt.subplots(math.ceil(len(regions)/2),2,figsize=(16,26))
+def byRegion_hist2d(datreg,regions,obsvar,modvar,lims,figsize=(16,26),fontsize=12):
+    fig,ax=plt.subplots(math.ceil(len(regions)/2),2,figsize=figsize)
     new_reg = [regions[i:i+2] for i in range(0, len(regions), 2)]
     for ri,axi in zip(new_reg,ax):
         for rj,axj in zip(ri,axi):
@@ -266,8 +269,8 @@ def byRegion_hist2d(datreg,regions,obsvar,modvar,lims):
             axj.set_aspect(1)
             axj.set_xlabel('Obs')
             axj.set_ylabel('Model')    
-            hist2d(axj,fig,datreg[rj],obsvar,modvar,lims)
-            axj.set_title(str(rj))
+            hist2d(axj,fig,datreg[rj],obsvar,modvar,lims,fontsize=fontsize)
+            axj.set_title(str(rj),fontsize=fontsize)
     if (len(regions) % 2) != 0:
         fig.delaxes(ax[-1][-1])
     return ax
@@ -402,31 +405,41 @@ def multi_timerror_graph(df,datyear,years,obsvar,modvar,figsize,units='($\mu$M)'
     plt.tight_layout()
     return ax
     
-def multi_timese_graph(df,years,obsvar,modvar,figsize,units='($\mu$M)',depth_range=(15,22)):
+def multi_timese_graph(df,years,obsvar,modvar,figsize,units='($\mu$M)',depth_range=(),leg=True):
     if type(years) == int:
         fig,ax=plt.subplots(1,1,figsize=figsize)
-        ps=tsertser_graph(ax,df,obsvar,modvar,dt.datetime(years,1,1),
-                        dt.datetime(years,12,31),'Z',depth_range,'z','m')
+        if len(depth_range) == 0:
+            ps=tsertser_graph(ax,df,obsvar,modvar,dt.datetime(years,1,1),
+                            dt.datetime(years,12,31))
+        else:
+            ps=tsertser_graph(ax,df,obsvar,modvar,dt.datetime(years,1,1),
+                            dt.datetime(years,12,31),'Z',depth_range,'z','m')
         ax.set_xlabel(f'Date',fontsize=20)
         ax.set_ylabel(f'{obsvar} {units}',fontsize=20)
         ax.set_title(str(years), fontsize=22)
         yearsFmt = mdates.DateFormatter('%d %b')
         ax.xaxis.set_major_formatter(yearsFmt)
-        legend = plt.legend(handles=ps,bbox_to_anchor=[1,.6,0,0])
-        plt.gca().add_artist(legend)
+        if leg == True:
+            legend = plt.legend(handles=ps,bbox_to_anchor=[1,.6,0,0])
+            plt.gca().add_artist(legend)
         return ps,ax
     elif type(years) == list:  
         fig, ax=plt.subplots(len(years),1,figsize=figsize)
         for d,Y in zip(range(len(years)),years):
-            ps=tsertser_graph(ax[d],df,obsvar,modvar,dt.datetime(Y,1,1),
-                              dt.datetime(Y,12,31),'Z',depth_range,'z','m')
+            if len(depth_range) == 0:
+                ps=tsertser_graph(ax[d],df,obsvar,modvar,dt.datetime(Y,1,1),
+                                    dt.datetime(Y,12,31))
+            else:
+                ps=tsertser_graph(ax[d],df,obsvar,modvar,dt.datetime(Y,1,1),
+                                  dt.datetime(Y,12,31),'Z',depth_range,'z','m')
             ax[d].set_xlabel(f'Date',fontsize=20)
             ax[d].set_ylabel(f'{obsvar} {units}',fontsize=20)
             ax[d].set_title(str(Y), fontsize=22)
             yearsFmt = mdates.DateFormatter('%d %b')
             ax[d].xaxis.set_major_formatter(yearsFmt)
-            legend = plt.legend(handles=ps,bbox_to_anchor=[1,.6,0,0])
-            plt.gca().add_artist(legend)
+            if leg == True:
+                legend = plt.legend(handles=ps,bbox_to_anchor=[1,.6,0,0])
+                plt.gca().add_artist(legend)
             return ps,ax
     else:
         raise(TypeError('years must be of type list or int'))
@@ -642,7 +655,7 @@ def ts_trendline(ax,df,obsvar,modvar,start_date,end_date,sepvar='',sepvals=([]),
     ax.xaxis.set_major_formatter(yearsFmt)
     return ps
 
-def TsByRegDep(datreg,regions,obsvar,modvar,year,regdepths,loc='lower left',units='($\mu$M)',trendline=False):
+def TsByRegDep(datreg,regions,obsvar,modvar,year,regdepths,loc='lower left',units='($\mu$M)',trendline=False,figsize=(13,26)):
     '''Creates time series for each region specified by the user. 
     
     :arg datreg: a dictionary which contains data for each seperate region. 
@@ -672,7 +685,7 @@ def TsByRegDep(datreg,regions,obsvar,modvar,year,regdepths,loc='lower left',unit
                  to the data in order to plot a trendline through the points.
     :type : boolean
     '''
-    fig,ax=plt.subplots(math.ceil(len(regions)),2,figsize=(13,26))
+    fig,ax=plt.subplots(math.ceil(len(regions)),2,figsize=figsize)
     for ri,axi in zip(regions,ax): 
         dfless=datreg[ri][datreg[ri].Z < regdepths[ri][0]]
         dfgreat=datreg[ri][datreg[ri].Z > regdepths[ri][1]]
@@ -781,7 +794,7 @@ def hovmoeller(variable, depth, dates_list, depth_range, date_range,
         vmin= variable.min()
     if np.isnan(vmax) == True:
         vmax= variable.max()
-    fig, ax = plt.subplots(1,1, figsize=(12,6))
+    fig, ax = plt.subplots(1,1, figsize=(12,4))
 
     # Plot temperature contours
     #CB = ax.contourf(dates_list, depth, np.transpose(variable),
