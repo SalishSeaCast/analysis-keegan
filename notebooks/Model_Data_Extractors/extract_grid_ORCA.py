@@ -11,7 +11,7 @@ import sys
 maxproc=4
 saveloc='/ocean/kflanaga/MEOPAR/savedData/201905_grid_data/'
 dirname='HC201905'
-year=2013
+year=2014
 plist=['Hoodsport','Twanoh','DabobBay','PointWells','CarrInlet','Hansville']
 varNameDict={'Hoodsport':'Hoodsport','Twanoh':'Twanoh','DabobBay':'DabobBay', 'PointWells':'PointWells',
              'CarrInlet':'CarrInlet', 'Hansville':'Hansville'}

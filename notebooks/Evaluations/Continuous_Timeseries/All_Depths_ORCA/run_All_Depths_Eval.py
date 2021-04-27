@@ -5,7 +5,7 @@ import os
 # PSF eval:
 saveloc='201905_Hindcast' 
 paramlistPSF=list()
-year_range=range(2013,2020)
+year_range=range(2014,2015)
 mooring_list=('CarrInlet','Hoodsport','PointWells','Twanoh','Hansville','DabobBay')
 modver='HC201905' #HC202007 is the other option.
 ptrcloc='/ocean/kflanaga/MEOPAR/savedData/201905_ptrc_data'

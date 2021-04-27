@@ -11,7 +11,8 @@ for y in year_range:
     saveloc='/ocean/kflanaga/MEOPAR/savedData/King_CountyData'
 
     paramlistPSF.append(dict(saveloc=saveloc,
-                             PATH=PATH,
+                             chlToN=1.8,
+                             indk=0,
                              year=y,
                              Mooring=Mooring))
 
@@ -22,7 +23,7 @@ for idict in paramlistPSF:
         os.remove(newfname)
     try:
         pm.execute_notebook(
-           'PointWilliams_Base_Timeseries.ipynb',
+           'PointWilliams_new_base.ipynb',
            newfname,
            parameters=idict
             );

@@ -1,6 +1,9 @@
 The Jupyter Notebooks in this directory are made by Keegan Flanagan
 for sharing of python code techniques and notes.
 
+## Warning!! This notebook folder consists unfinished work!
+This folder was meant to contain a sereis of notebooks that would allow model-observation comparisons for different years to be easily used. However, as the project continued the need for these notebooks became less and less of a priority. I eventually decided to leave these notebooks unfinished to focus on other things. The unfinished notebooks have been left here in case their contents are of use to future projects. 
+
 The links below are to static renderings of the notebooks via
 [nbviewer.jupyter.org](https://nbviewer.jupyter.org/).
 Descriptions under the links below are from the first cell of the notebooks
