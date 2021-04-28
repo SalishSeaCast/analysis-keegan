@@ -8,43 +8,43 @@ Descriptions under the links below are from the first cell of the notebooks
 
 * ## [2010_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/Dockton/2010_Dockton_Timeseries.ipynb)  
     
-    This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
+    A notebook that contains evaluation timeseries and correlation plots that compare data from the King County mooring at Twanoh in Hood Canal to the model data. The data used are daily averages of the modeled and observed data. 
 
 * ## [2011_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/Dockton/2011_Dockton_Timeseries.ipynb)  
     
-    This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
+    A notebook that contains evaluation timeseries and correlation plots that compare data from the King County mooring at Twanoh in Hood Canal to the model data. The data used are daily averages of the modeled and observed data. 
 
 * ## [2012_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/Dockton/2012_Dockton_Timeseries.ipynb)  
     
-    This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
+    A notebook that contains evaluation timeseries and correlation plots that compare data from the King County mooring at Twanoh in Hood Canal to the model data. The data used are daily averages of the modeled and observed data. 
 
 * ## [2013_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/Dockton/2013_Dockton_Timeseries.ipynb)  
     
-    This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
+    A notebook that contains evaluation timeseries and correlation plots that compare data from the King County mooring at Twanoh in Hood Canal to the model data. The data used are daily averages of the modeled and observed data. 
 
 * ## [2014_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/Dockton/2014_Dockton_Timeseries.ipynb)  
     
-    This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
+    A notebook that contains evaluation timeseries and correlation plots that compare data from the King County mooring at Twanoh in Hood Canal to the model data. The data used are daily averages of the modeled and observed data. 
 
 * ## [2015_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/Dockton/2015_Dockton_Timeseries.ipynb)  
     
-    This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
+    A notebook that contains evaluation timeseries and correlation plots that compare data from the King County mooring at Twanoh in Hood Canal to the model data. The data used are daily averages of the modeled and observed data. 
 
 * ## [2016_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/Dockton/2016_Dockton_Timeseries.ipynb)  
     
-    This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
+    A notebook that contains evaluation timeseries and correlation plots that compare data from the King County mooring at Twanoh in Hood Canal to the model data. The data used are daily averages of the modeled and observed data. 
 
 * ## [2017_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/Dockton/2017_Dockton_Timeseries.ipynb)  
     
-    This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
+    A notebook that contains evaluation timeseries and correlation plots that compare data from the King County mooring at Twanoh in Hood Canal to the model data. The data used are daily averages of the modeled and observed data. 
 
 * ## [2018_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/Dockton/2018_Dockton_Timeseries.ipynb)  
     
-    This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
+    A notebook that contains evaluation timeseries and correlation plots that compare data from the King County mooring at Twanoh in Hood Canal to the model data. The data used are daily averages of the modeled and observed data. 
 
 * ## [2019_Dockton_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/Dockton/2019_Dockton_Timeseries.ipynb)  
     
-    This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
+    A notebook that contains evaluation timeseries and correlation plots that compare data from the King County mooring at Twanoh in Hood Canal to the model data. The data used are daily averages of the modeled and observed data. 
 
 
 ##License

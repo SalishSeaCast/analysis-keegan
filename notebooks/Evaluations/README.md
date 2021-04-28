@@ -8,13 +8,16 @@ Descriptions under the links below are from the first cell of the notebooks
 
 * ## [CTD_Base_Puget_Evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/CTD_Base_Puget_Evaluation.ipynb)  
     
-    A notebook which contains an evaluation of the SalishSeaCast model within PugetSound. More specifically, it compares Observed data on temperature, salinity, and chlorophyll concentrations  collected from CTD data and compares it to various model phytoplankon outputs. This evaluation includes scatter plots and 2d histograms visualizing the similarity of observed and model data as well as tables of evaluation statistics. 
+    A notebook which contains an evaluation of the SalishSeaCast model within PugetSound. More specifically, it compares observed data on temperature, salinity, and chlorophyll concentrations collected using a CTD and compares it to the model output. This evaluation includes scatter plots and 2d histograms visualizing the similarity of observed and model data as well as tables of evaluation statistics. 
 
 * ## [Chlbot_Base_Puget_Evaluation.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Chlbot_Base_Puget_Evaluation.ipynb)  
     
-    A notebook which contains an evaluation of the SalishSeaCast model within PugetSound. More specifically, it compares Observed data on chlorophyll concentrations collected from bottle data and compares it to various model phytoplankon outputs. This evaluation includes scatter plots visualizing the similarity of observed and model data as well as tables of evaluation statistics.
+    A notebook which contains an evaluation of the SalishSeaCast model within PugetSound. More specifically, it compares Observed data on chlorophyll concentrations collected from bottle data and compares it to various model phytoplankon outputs. It also looks at temperature and salinity data collected from CTD data and compares model error to these environmental variables. This evaluation includes scatter plots visualizing the similarity of observed and model data as well as tables of evaluation statistics.
 
 * ## [Ind_Stations_Timeseries_Base.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Ind_Stations_Timeseries_Base.ipynb)  
+    
+    **WARNING!!!**
+    while this notebook is perfectly functional and may include some useful information, it was not fully completed by the end of the project. Furthermore, it uses the gaussian smoothing function rather than a sinusoidal trendline function in order to create trendlines which is not conistent with what is seen in other notebooks. 
     
     A notebook which contains timeseries of SalishSeaCast model output and observed data within PugetSound. This script is designed so that model and observed data can be easily compared across multiple different stations. 
 

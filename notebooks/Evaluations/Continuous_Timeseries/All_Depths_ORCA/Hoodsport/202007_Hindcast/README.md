@@ -8,11 +8,11 @@ Descriptions under the links below are from the first cell of the notebooks
 
 * ## [2015_Hoodsport_Evaluations.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/All_Depths_ORCA/Hoodsport/202007_Hindcast/2015_Hoodsport_Evaluations.ipynb)  
     
-    This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output For all depths. For now, it is focussing on just plotting model output for all depths. 
+    This notebook contains Hovmoller plots that compare the model output over many different depths to the results from the ORCA Buoy data. 
 
 * ## [2016_Hoodsport_Evaluations.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/All_Depths_ORCA/Hoodsport/202007_Hindcast/2016_Hoodsport_Evaluations.ipynb)  
     
-    This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output For all depths. For now, it is focussing on just plotting model output for all depths. 
+    This notebook contains Hovmoller plots that compare the model output over many different depths to the results from the ORCA Buoy data. 
 
 
 ##License

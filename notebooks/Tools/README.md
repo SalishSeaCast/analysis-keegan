@@ -8,7 +8,7 @@ Descriptions under the links below are from the first cell of the notebooks
 
 * ## [full_model_timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Tools/full_model_timeseries.ipynb)  
     
-    A notebook which contains timeseries of SalishSeaCast model output and observed data within PugetSound for the year 2009. This script is designed so that model and observed data can be easily compared across multiple different stations. 
+    This notebook contains a prototype for a workflow that would allow you to compare observations that were sampled in dicrete time to the model output in continuous time. Only the first 14 cells work, and even then they are so unbelievably slow as to be almost entirely useless. 
 
 
 ##License

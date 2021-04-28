@@ -1,3 +1,32 @@
+""" Functions that are no longer used in my notebooks due to finding more effective functions.
+"""
+import numpy as np
+import numpy.polynomial.polynomial as poly
+import matplotlib.pyplot as plt
+import os
+from scipy import optimize as opt
+from scipy.stats import linregress
+import math
+import pandas as pd
+import netCDF4 as nc
+import datetime as dt
+from salishsea_tools import evaltools as et, viz_tools
+import gsw 
+import matplotlib.gridspec as gridspec
+import matplotlib as mpl
+import matplotlib.dates as mdates
+import cmocean as cmo
+import scipy.interpolate as sinterp
+import pickle
+import warnings
+import cmocean
+import json
+import f90nml
+from collections import OrderedDict
+from matplotlib.colors import LogNorm
+
+colors=('blue','green','firebrick','darkorange','darkviolet','fuchsia',
+        'royalblue','darkgoldenrod','mediumspringgreen','deepskyblue')
 def ts_gsmooth_line(ax,df,obsvar,modvar,start_date,end_date,L=50,region='',station='',sepvar='',sepvals=([]),lname='',sepunits='', ocols=('blue','darkviolet','teal','green','deepskyblue'),
                           mcols=('fuchsia','firebrick','orange','darkgoldenrod','maroon'),labels=''):
     """ Plots the daily average value of df[obsvar] and df[modvar] against df[YD]. 

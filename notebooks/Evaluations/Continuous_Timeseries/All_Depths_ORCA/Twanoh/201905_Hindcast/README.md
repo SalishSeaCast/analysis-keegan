@@ -6,13 +6,33 @@ The links below are to static renderings of the notebooks via
 Descriptions under the links below are from the first cell of the notebooks
 (if that cell contains Markdown or raw text).
 
+* ## [2013_Twanoh_Evaluations.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/All_Depths_ORCA/Twanoh/201905_Hindcast/2013_Twanoh_Evaluations.ipynb)  
+    
+    This notebook contains Hovmoller plots that compare the model output over many different depths to the results from the ORCA Buoy data. 
+
+* ## [2014_Twanoh_Evaluations.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/All_Depths_ORCA/Twanoh/201905_Hindcast/2014_Twanoh_Evaluations.ipynb)  
+    
+    This notebook contains Hovmoller plots that compare the model output over many different depths to the results from the ORCA Buoy data. 
+
 * ## [2015_Twanoh_Evaluations.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/All_Depths_ORCA/Twanoh/201905_Hindcast/2015_Twanoh_Evaluations.ipynb)  
     
-    This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output For all depths. For now, it is focussing on just plotting model output for all depths. 
+    This notebook contains Hovmoller plots that compare the model output over many different depths to the results from the ORCA Buoy data. 
 
 * ## [2016_Twanoh_Evaluations.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/All_Depths_ORCA/Twanoh/201905_Hindcast/2016_Twanoh_Evaluations.ipynb)  
     
-    This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output For all depths. For now, it is focussing on just plotting model output for all depths. 
+    This notebook contains Hovmoller plots that compare the model output over many different depths to the results from the ORCA Buoy data. 
+
+* ## [2017_Twanoh_Evaluations.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/All_Depths_ORCA/Twanoh/201905_Hindcast/2017_Twanoh_Evaluations.ipynb)  
+    
+    This notebook contains Hovmoller plots that compare the model output over many different depths to the results from the ORCA Buoy data. 
+
+* ## [2018_Twanoh_Evaluations.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/All_Depths_ORCA/Twanoh/201905_Hindcast/2018_Twanoh_Evaluations.ipynb)  
+    
+    This notebook contains Hovmoller plots that compare the model output over many different depths to the results from the ORCA Buoy data. 
+
+* ## [2019_Twanoh_Evaluations.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/All_Depths_ORCA/Twanoh/201905_Hindcast/2019_Twanoh_Evaluations.ipynb)  
+    
+    This notebook contains Hovmoller plots that compare the model output over many different depths to the results from the ORCA Buoy data. 
 
 
 ##License

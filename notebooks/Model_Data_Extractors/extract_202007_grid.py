@@ -10,7 +10,7 @@ import sys
 ###!!! Alright, that is sorted know. 
 #The 2015 data goes from 0101 to 0630 and from 0701 to 1231
 # The 2016 data goes from 0101 to 1120 and from 1116 to 1231
-# Note that for the 2016 data you need to make an alteration to the first glob. 
+# This means that you need to alter the timespan (t0,tm1,tm2,te) in order to make this work. 
 
 maxproc=4
 spath='/home/sallen/202007/202007C-p3/'
@@ -121,8 +121,6 @@ def runExtractLocs():
             pids[ipid].stderr.close()
             print(pids[ipid].returncode)
     return pids
-
-# Hmmmm. I think that Join locs ran effectively. However, it appears that extract locs did not so it never actually concatenated anything. 
 
 def runJoinLocs():
     pids=dict()

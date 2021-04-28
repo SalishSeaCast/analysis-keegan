@@ -8,27 +8,27 @@ Descriptions under the links below are from the first cell of the notebooks
 
 * ## [2014_PointWilliams_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/PointWilliams/2014_PointWilliams_Timeseries.ipynb)  
     
-    This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
+    A notebook that contains evaluation timeseries and correlation plots that compare data from the ORCA buoy at Point Williams in Main Basin to the model data. The data used are daily averages of the modeled and observed data. 
 
 * ## [2015_PointWilliams_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/PointWilliams/2015_PointWilliams_Timeseries.ipynb)  
     
-    This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
+    A notebook that contains evaluation timeseries and correlation plots that compare data from the ORCA buoy at Point Williams in Main Basin to the model data. The data used are daily averages of the modeled and observed data. 
 
 * ## [2016_PointWilliams_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/PointWilliams/2016_PointWilliams_Timeseries.ipynb)  
     
-    This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
+    A notebook that contains evaluation timeseries and correlation plots that compare data from the ORCA buoy at Point Williams in Main Basin to the model data. The data used are daily averages of the modeled and observed data. 
 
 * ## [2017_PointWilliams_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/PointWilliams/2017_PointWilliams_Timeseries.ipynb)  
     
-    This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
+    A notebook that contains evaluation timeseries and correlation plots that compare data from the ORCA buoy at Point Williams in Main Basin to the model data. The data used are daily averages of the modeled and observed data. 
 
 * ## [2018_PointWilliams_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/PointWilliams/2018_PointWilliams_Timeseries.ipynb)  
     
-    This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
+    A notebook that contains evaluation timeseries and correlation plots that compare data from the ORCA buoy at Point Williams in Main Basin to the model data. The data used are daily averages of the modeled and observed data. 
 
 * ## [2019_PointWilliams_Timeseries.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/PointWilliams/2019_PointWilliams_Timeseries.ipynb)  
     
-    This notebook will hopefully contain timeseries that plot continuous data from moorings alongside model output. 
+    A notebook that contains evaluation timeseries and correlation plots that compare data from the ORCA buoy at Point Williams in Main Basin to the model data. The data used are daily averages of the modeled and observed data. 
 
 * ## [Untitled.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/PointWilliams/Untitled.ipynb)  
     

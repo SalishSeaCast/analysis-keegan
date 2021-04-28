@@ -8,11 +8,11 @@ Descriptions under the links below are from the first cell of the notebooks
 
 * ## [Dockton_new_base.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/Dockton_new_base.ipynb)  
     
-    A notebook that contains evaluation timeseries and correlation plots that compare data from the ORCA buoy in hood canal to the model data. For now, it is only looking at 2007. 
+    A notebook that contains evaluation timeseries and correlation plots that compare data from the King County mooring at Twanoh in Hood Canal to the model data. The data used are daily averages of the modeled and observed data. 
 
 * ## [PointWilliams_new_base.ipynb](https://nbviewer.jupyter.org/github/SalishSeaCast/analysis-keegan/blob/master/notebooks/Evaluations/Continuous_Timeseries/King_County/Daily_Timeseries/PointWilliams_new_base.ipynb)  
     
-    A notebook that contains evaluation timeseries and correlation plots that compare data from the ORCA buoy in hood canal to the model data. For now, it is only looking at 2007. 
+    A notebook that contains evaluation timeseries and correlation plots that compare data from the ORCA buoy at Point Williams in Main Basin to the model data. The data used are daily averages of the modeled and observed data. 
 
 
 ##License
